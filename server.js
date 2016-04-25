@@ -1,15 +1,22 @@
-// require express so that we can build an express app
 var express = require('express');
-// require path so that we can use path stuff like path.join
 var path = require('path');
-// instantiate the app
-var app = express();
+var morgan = require('morgan');
+var flash    = require('connect-flash');
+var passport = require('passport');
+var cookieParser = require('cookie-parser');
+var session      = require('express-session');
 var bodyParser = require('body-parser'); 
-app.use(bodyParser.json());
-// This goes in our server.js file so that we actually use the mongoose config file!
 require('./server/config/mongoose.js');
-// this line requires and runs the code from our routes.js file and passes it app so that we can attach our routing rules to our express application!
-require('./server/config/routes.js')(app);
+require('./server/config/routes.js')(app, passport);
+
+var app = express();
+app.use(bodyParser.json());
+app.use(morgan('dev')); // log every request to the console
+app.use(cookieParser()); // read cookies (needed for auth)
+app.use(session({ secret: 'ilovescotchscotchyscotchscotch' })); // session secret
+app.use(passport.initialize());
+app.use(passport.session()); // persistent login sessions
+app.use(flash()); // use connect-flash for flash messages stored in session
 
 // set up a static file server that points to the "client" directory
 app.use(express.static(path.join(__dirname, '/client')));
