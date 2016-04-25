@@ -1,9 +1,25 @@
 {
-  "name": "FullMean_Friends",
+  "name": "service_ninja",
   "version": "0.0.1",
   "dependencies": {
     "express": "~4.2.0",
     "mongoose": "latest",
     "body-parser": "latest"
-  }
+  },
+  "scripts": {
+    "start": "node server.js"
+  },
+  "main": "server.js",
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vaskous27/service_ninja.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/vaskous27/service_ninja/issues"
+  },
+  "homepage": "https://github.com/vaskous27/service_ninja#readme",
+  "description": ""
 }
