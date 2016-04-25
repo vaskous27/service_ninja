@@ -1,88 +1,28 @@
-<html ng-app="friends_app">
+<html ng-app="myApp">
 <head>
-  <title>Full Mean Demo</title>
+  <title>Service Ninja Startup Profiles</title>
    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
-  <!-- require angular -->
   <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.26/angular.min.js"></script>
   <script>
-        // Let's create our angular module
-      var friends_app = angular.module('friends_app', []);
+  	  var myAppModule = angular.module('myApp', ['ngRoute']);
 
-            // create the FriendFactory
-      friends_app.factory('FriendFactory', function($http) {
-        var factory = {};
-        var friends = [];
-        //Restful syntax: index = get all that object
-        factory.index = function(callback) {
-          // Where do we get access to $http?
-          $http.get('/friends').success(function(output) {
-            friends = output;
-            callback(friends);
-          }) 
-        }
-        // note the use of callbacks!
-        // Restful syntax: create = add one to that object
-        factory.create = function(new_friend, callback) {
-          $http.post('/friends', new_friend).success(function(output) {
-            friends.push({name: new_friend.name, age: new_friend.age});
-          })
-        }
-
-        factory.destroy = function(id, callback) {
-          $http.get('/delete/' + id).success(function(output) {
-            console.log(output);
-            friends = output;
-            callback(friends);
-          })
-       }
-
-        // factory.destroy = function(friend,callback) {
-        //   friends.splice(friends.indexOf(friend), 1)
-        //   callback();
-        // }
-        return factory;
-      });
-      // Now let's create a controller with some hardcoded data!
-      friends_app.controller('FriendsController', function($scope, FriendFactory) {
-        // replace "$scope.friends = FriendFactory.index()" with the following code
-        FriendFactory.index(function(data) {
-          $scope.friends = data;
-          // anything else that you want to happen after storing friends to $scope
-        });
-        // spend some time understanding the difference and how/why we are using callbacks here.
-        $scope.addfriend = function() {
-          // note the use of callbacks here
-          FriendFactory.create($scope.new_friend, function() {
-        //the line below says: set our $scope.friends variable to whatever is returned from FriendFactory.index.  In this case, that will be all the friends.
-            $scope.friends = FriendFactory.index();
-            $scope.new_friend = {};
-          });
-        }
-
-        $scope.deleteFriend = function(friend_id) {
-          FriendFactory.destroy(friend_id, function(data){
-            $scope.friends = data;
-          })
-        }
-      })
+      myAppModule.config(function ($routeProvider) {
+          $routeProvider
+            .when('/dashboard', {
+                templateUrl: 'partials/dashboard.html'
+            })
+             .when('/profile', {
+                templateUrl: 'partials/profile.html'
+            })
+            .otherwise({
+              redirectTo: '/'
+            });
+       });
   </script>
 </head>
-<!-- everything in the body is going to use the friends controller (this gives us access to the friends controller $scope) -->
-<body ng-controller="FriendsController">
-  <h1>Friends</h1>
-  <input type="text" ng-model="filter_name" placeholder="filter">
-  {{filter_name}}
-  <ul>
-    <!-- here is where we are going to display friends -->
-    <li ng-repeat="friend in friends | filter: filter_name">
-      {{friend.name}}, {{friend.age}} <button ng-click='deleteFriend(friend._id)'>Delete</button>
-    </li>
-  </ul>
-  <h1>Add a Friend</h1>
-  <!-- objects and properties nothing scary -->
-  <input type="text" ng-model="new_friend.name" placeholder="name">
-  <input type="text" ng-model="new_friend.age" placeholder="age">
-  <!-- addfriend() is a method we are going to make in the angular controller -->
-  <input type="submit" ng-click="addfriend()">
+<body>
+  <div>
+      <div ng-view="">
+      </div>
 </body>
 </html>
