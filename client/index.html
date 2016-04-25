@@ -1,24 +1,30 @@
-<html ng-app="myApp">
+<html ng-app="serviceninja">
 <head>
   <title>Service Ninjas</title>
    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.6/css/materialize.min.css">
 	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.5/angular.min.js"></script>
 	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.5/angular-route.min.js"></script>
   <script>
-  	  var myAppModule = angular.module('myApp', ['ngRoute']);
+  	  var serviceninja = angular.module('serviceninja', ['ngRoute']);
 
-      myAppModule.config(function ($routeProvider) {
+      serviceninja.config(function ($routeProvider) {
           $routeProvider
+            .when('/',{
+                  templateUrl: 'partials/front.html',
+                  controller: 'HomeController'
+              })
+            .when('/login', {
+                templateUrl: 'partials/login.html'
+            })
+            .when('/signup', {
+                templateUrl: 'partials/signup.html'
+            })
             .when('/dashboard', {
                 templateUrl: 'partials/dashboard.html'
-            })
+            })            
              .when('/profile', {
                 templateUrl: 'partials/profile.html'
-            })
-             .when('/',{
-                templateUrl: 'static/partials/front.html',
-                controller: 'HomeController'
-            })                    
+            })                                 
             .otherwise({
               redirectTo: '/'
             });
@@ -31,7 +37,7 @@
   </script>
 </head>
 <body>
-      <div ng-view="">
+      <div ng-view=" ">
       </div>
 </body>
 </html>
