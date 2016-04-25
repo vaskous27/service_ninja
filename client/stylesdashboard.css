@@ -1,0 +1,53 @@
+* {
+	margin-left: 20px;
+}
+
+.table {
+	margin-top: 20px;
+	height: auto;
+	width: 400px;
+	box-shadow: 10px 10px 5px #888888;
+	text-align: center;
+}
+
+button {
+	border-radius: 5px;
+}
+
+#form {
+	height: auto;
+	width: 300px;
+	background-color: #F2DEDE;
+	padding: 0.6%;
+	margin-bottom: 3%;
+	margin-top: 3%;
+	margin-left: 5%;
+	box-shadow: 10px 10px 5px #888888;
+}
+
+input {
+	height: 30px;
+}
+
+h1 {
+	margin-left: 89px;
+	border-bottom: 1px solid silver;
+	width: 400px;
+	padding-bottom: 5px;
+}
+
+#products {
+	display: inline block;
+}
+
+.products {
+	display: inline block;
+}
+
+time {
+	margin-left: auto;
+}
+
+
+
+
