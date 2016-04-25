@@ -2,10 +2,12 @@
 var express = require('express');
 // require path so that we can use path stuff like path.join
 var path = require('path');
+var morgan = require('morgan');
 // instantiate the app
 var app = express();
 var bodyParser = require('body-parser'); 
 app.use(bodyParser.json());
+app.use(morgan('dev'));
 // This goes in our server.js file so that we actually use the mongoose config file!
 require('./server/config/mongoose.js');
 // this line requires and runs the code from our routes.js file and passes it app so that we can attach our routing rules to our express application!
