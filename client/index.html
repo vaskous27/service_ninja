@@ -4,21 +4,21 @@
    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.6/css/materialize.min.css">
 	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.5/angular.min.js"></script>
 	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.5/angular-route.min.js"></script>
+  
   <script>
   	  var serviceninja = angular.module('serviceninja', ['ngRoute']);
 
       serviceninja.config(function ($routeProvider) {
           $routeProvider
             .when('/',{
-                  templateUrl: 'partials/front.html',
-                  controller: 'FrontController'
+                  templateUrl: 'partials/front.html'
               })
             .when('/login', {
-                templateUrl: 'partials/login.html'
-            })
-            .when('/signup', {
-                templateUrl: 'partials/signup.html'
-            })
+                templateUrl: 'partials/logIn.html'
+            }) 
+            .when('/register', {
+                templateUrl: 'partials/register.html'
+            }) 
             .when('/dashboard', {
                 templateUrl: 'partials/dashboard.html'
             })            
@@ -28,12 +28,24 @@
             .otherwise({
               redirectTo: '/'
             });
-       });
+      })
 
-      serviceninja.controller('FrontController', function($scope){
+      //
+      //
+      // FACTORIES
+      //
+      //
+
+
+
+      //
+      //
+      // CONTROLLERS
+      //
+      //
+
+
       
-      });
-
   </script>
 </head>
 <body>
