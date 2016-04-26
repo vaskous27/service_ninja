@@ -10,6 +10,9 @@
   <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment.min.js"></script>
   <script src="//cdnjs.cloudflare.com/ajax/libs/angular-moment/0.9.0/angular-moment.min.js"></script>
   <script>
+      $(document).ready(function() {
+          $('select').material_select();
+          });
   	  var serviceninja = angular.module('serviceninja', ['ngRoute', 'angularMoment']);
 //factories
     serviceninja.factory('serviceFactory', function($http){
@@ -70,6 +73,24 @@
             //     templateUrl: 'static/partials/front.html',
             //     controller: 'HomeController'
             // })
+            .when('/login', {
+                templateUrl: 'partials/login.html'
+            })
+            .when('/signup', {
+                templateUrl: 'partials/signup.html'
+            })
+            .when('/dashboard', {
+                templateUrl: 'partials/dashboard.html'
+            })            
+             .when('/profile', {
+                templateUrl: 'partials/profileView.html'
+            })
+             .when('/form', {
+                templateUrl: 'partials/profileForm.html'
+            })
+            .when('/message', {
+                templateUrl: 'partials/message.html'
+            })         
             .when('/services',{
                 templateUrl: 'partials/servicePartial.html',
                 controller: 'serviceController'
@@ -86,10 +107,6 @@
                 templateUrl: 'partials/showPartial.html',
                 controller: 'showController'
             })                    
-            .otherwise({
-              redirectTo: '/'
-            });
-       });
 //controllers
       serviceninja.controller('FrontController', function($scope){
       
@@ -132,6 +149,7 @@
       })
   </script>
 </head>
+<<<<<<< HEAD
 <body>
 <div class="container">
 <div id="header">

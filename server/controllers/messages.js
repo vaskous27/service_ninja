@@ -1,11 +1,11 @@
 var mongoose = require('mongoose');
-var Review = mongoose.model('Review');
 var User = mongoose.model('User');
+var Message = mongoose.model('Message');
 module.exports = (function() {
   return {
 
-  new: function(req, res){
-                    Review.create(req.body, function(err, results) {
+  	new: function(req, res){
+                    Message.create(req.body, function(err, results) {
                         if(err) {
                             console.log(err);
                         }
@@ -16,7 +16,7 @@ module.exports = (function() {
             },
 
     index: function(req, res){
-				Review.find({}, function(err, data){
+				Message.find({}, function(err, data){
 					if(err) {
 						console.log(err);
 					}
@@ -28,7 +28,7 @@ module.exports = (function() {
 
 
     findOne: function(req, res){
-                Review.findOne({name: req.params.name}, function(err, data){
+                Message.findOne({name: req.params.name}, function(err, data){
                     if(err) {
                         console.log(err);
                     }
@@ -39,5 +39,6 @@ module.exports = (function() {
         }
 
 
-  }
+
+ }
 })();
