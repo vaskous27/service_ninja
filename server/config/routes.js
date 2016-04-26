@@ -1,6 +1,7 @@
 
-var users = require('./../controllers/users.js'); 
-var reviews = require('./../controllers/reviews.js');  
+var Users = require('./../controllers/users.js'); 
+var Reviews = require('./../controllers/reviews.js'); 
+var Messages = require('./../controllers/messages.js');  
 
 
 
@@ -38,5 +39,33 @@ var reviews = require('./../controllers/reviews.js');
     app.put('/users/edit/:name', function(req, res) {
     Users.edit(req, res);
     })
+
+    app.get('/message/:name', function(req, res) {
+    Messages.findOne(req, res);
+    })
+
+    app.post('/message/new', function(req, res) {
+    Messages.new(req, res);
+    })
+
+    app.get('/messages', function(req, res) {
+    Messages.index(req, res);
+    })
+
+    app.get('/review/:name', function(req, res) {
+    Reviews.findOne(req, res);
+    })
+
+    app.post('/review/new', function(req, res) {
+    Reviews.new(req, res);
+    })
+
+    app.get('/reviews', function(req, res) {
+    Reviews.index(req, res);
+    })
+
+  };
+
+
 
 
