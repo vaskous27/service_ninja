@@ -6,10 +6,37 @@ var bcrypt = require('bcrypt');
  
 // set up a mongoose model
 var UserSchema = new mongoose.Schema({
+<<<<<<< HEAD
     authId: Number,
     name: String,
     provider: String,
     json_info: Object
+=======
+  name: String,
+  founder: String,
+  description: String,
+  skills: String,
+  location: String,
+  url: String,
+  categories: String,
+  reviews: [{type: Schema.Types.ObjectId, ref: 'Review'}],
+  local            : {
+        email        : String,
+        password     : String,
+    },
+    facebook         : {
+        id           : String,
+        token        : String,
+        email        : String,
+        name         : String
+    },
+    google           : {
+        id           : String,
+        token        : String,
+        email        : String,
+        name         : String
+    }
+>>>>>>> origin/master
 });
  
 module.exports = mongoose.model('User', UserSchema);
