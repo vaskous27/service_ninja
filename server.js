@@ -6,8 +6,6 @@ var passport = require('passport');
 var cookieParser = require('cookie-parser');
 var session      = require('express-session');
 var bodyParser = require('body-parser'); 
-require('./server/config/mongoose.js');
-require('./server/config/routes.js')(app, passport);
 
 var app = express();
 app.use(bodyParser.json());
@@ -20,6 +18,11 @@ app.use(flash()); // use connect-flash for flash messages stored in session
 
 // set up a static file server that points to the "client" directory
 app.use(express.static(path.join(__dirname, '/client')));
+require('./server/config/mongoose.js');
+require('./server/config/routes.js')(app, passport);
 app.listen(8000, function() {
   console.log('cool stuff on: 8000');
 });
+
+app.use(session({ secret: 'ilovescotchscotchyscotchscotch', resave: true,
+   saveUninitialized: true }));
