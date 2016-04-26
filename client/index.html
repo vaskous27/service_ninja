@@ -1,37 +1,144 @@
-<html ng-app="myApp">
+<html ng-app="serviceninja">
 <head>
   <title>Service Ninjas</title>
-   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.6/css/materialize.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.6/css/materialize.min.css">
+  <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.6/js/materialize.min.js"></script>
 	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.5/angular.min.js"></script>
 	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.5/angular-route.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/angular-moment/0.9.0/angular-moment.min.js"></script>
   <script>
-  	  var myAppModule = angular.module('myApp', ['ngRoute']);
-
-      myAppModule.config(function ($routeProvider) {
+  	  var serviceninja = angular.module('serviceninja', ['ngRoute', 'angularMoment']);
+//factories
+    serviceninja.factory('serviceFactory', function($http){
+      var factory = {};
+      var currentService = {};
+      var services = [];
+      factory.index = function(callback){
+        $http.get('/services').success(function(output){
+          services = output;
+          callback(output);
+        })
+      }
+      factory.create = function(newService, callback){
+        $http.post('/services', newService).success(function(output){
+          currnetService = output;
+          callback(output);
+        })
+      }
+      factory.find = function(id, callback){
+        $http.get('/services/' + id).success(function(output){
+          callback(output);
+        })
+      }
+      // factory.getQuestion = function(callback){
+      //   if(currentQuestion) callback(currentQuestion);
+      //   else{
+      //     $location.path('/');
+      //   }
+      // }
+      // factory.update = function(question, callback){
+      //   $http.post('updateQuestions', question).success(function(output){
+      //     callback(output);
+      //   })
+      // }
+      return factory;
+    })
+    serviceninja.factory('categoryFactory', function($http){
+      var factory = {};
+      var categories = [];
+      factory.index = function(callback){
+        $http.get('/categories').success(function(output){
+          categories = output;
+          callback(output);
+        })
+      }
+      return factory;
+    })
+//routes
+      serviceninja.config(function ($routeProvider) {
           $routeProvider
-            .when('/dashboard', {
-                templateUrl: 'partials/dashboard.html'
+            // .when('/dashboard', {
+            //     templateUrl: 'partials/dashboard.html'
+            // })
+            //  .when('/profile', {
+            //     templateUrl: 'partials/profile.html'
+            // })
+            //  .when('/',{
+            //     templateUrl: 'static/partials/front.html',
+            //     controller: 'HomeController'
+            // })
+            .when('/services',{
+                templateUrl: 'partials/servicePartial.html',
+                controller: 'serviceController'
             })
-             .when('/profile', {
-                templateUrl: 'partials/profile.html'
+            .when('/',{
+                templateUrl: 'partials/servicePartial.html',
+                controller: 'serviceController'
             })
-             .when('/',{
-                templateUrl: 'static/partials/front.html',
-                controller: 'HomeController'
+            .when('/addServices',{
+                templateUrl: 'partials/addServicePartial.html',
+                controller: 'addServiceController'
+            })
+            .when('/show/:param1',{
+                templateUrl: 'partials/showPartial.html',
+                controller: 'showController'
             })                    
             .otherwise({
               redirectTo: '/'
             });
        });
-
+//controllers
       serviceninja.controller('FrontController', function($scope){
       
       });
-
+      serviceninja.controller('serviceController', function($scope, serviceFactory, categoryFactory){
+        // var vm = this;
+        // vm.time = new Date();
+        $scope.services = {};
+        serviceFactory.index(function(data){
+          $scope.services = data;
+        })
+        categoryFactory.index(function(data){
+          $scope.categories = data;
+        })
+        console.log($scope.services);
+      });
+      serviceninja.controller('addServiceController', function($scope, serviceFactory, categoryFactory){
+        $scope.addService = function(){
+          $scope.newService.status = "inactive";
+          console.log($scope.newService);
+          serviceFactory.create($scope.newService, function(data){
+            console.log(data);
+          })
+          //
+          //$scope TO DO:
+          //update a _user
+          //update reviews
+          //
+        }
+        categoryFactory.index(function(data){
+          $scope.categories = data;
+        })
+      });
+      serviceninja.controller('showController', function($scope, serviceFactory, $routeParams){
+        $scope.currentService = {};
+        serviceFactory.find($routeParams.param1, function(data){
+          $scope.currentService = data;
+          console.log($scope.currentService);
+        })
+      })
   </script>
 </head>
 <body>
-      <div ng-view="">
-      </div>
+<div class="container">
+<div id="header">
+<a href="#/services">Home</a> | <a href="#/services">View All Services</a>
+</div>
+    <div ng-view="">
+    </div>
+</div>
 </body>
 </html>
