@@ -4,6 +4,7 @@ var UserSchema = new mongoose.Schema({
   name: String,
   founder: String,
   description: String,
+  logline: String,
   skills: String,
   location: String,
   url: String,

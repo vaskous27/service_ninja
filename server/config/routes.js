@@ -22,3 +22,21 @@ var reviews = require('./../controllers/reviews.js');
         // render the page and pass in any flash data if it exists
         // res.render('signup.ejs', { message: req.flash('signupMessage') });
     });
+
+    app.get('/users/:name', function(req, res) {
+    Users.findOne(req, res);
+    })
+
+    app.post('/users/new', function(req, res) {
+    Users.new(req, res);
+    })
+
+    app.get('/users', function(req, res) {
+    Users.index(req, res);
+    })
+
+    app.put('/users/edit/:name', function(req, res) {
+    Users.edit(req, res);
+    })
+
+

@@ -1,0 +1,91 @@
+<div ng-controller="companyFormController">
+
+<script>
+   $(document).ready(function() {
+          $('select').material_select();
+          });
+</script>
+
+
+
+ <div id="profile_form" class="z-depth-4">
+            <h3 style="color:green">Create Company Profile</h3>
+           <!--  <div class="row"> -->
+              <form class="col s12">
+                <div class="row">
+                  <div class="input-field col s6">
+                    <i class="material-icons prefix">business</i>
+                    <input id="name" type="text" class="validate">
+                    <label for="name">Company Name</label>
+                  </div>
+                  <div class="file-field input-field col s6">
+                    <input id="location" type="text" class="validate">
+                    <label for="location">Location</label>
+                  </div>  
+                   <div class="file-field input-field" id="logo">
+                      <div class="btn btn-default waves-effect waves-green z-depth-2" id="img_btn">
+                        <span>Logo</span>
+                        <input type="file">
+                      </div>
+                     <!--  <div class="file-path-wrapper">
+                        <input class="file-path validate" type="text">
+                      </div> -->
+                  </div>
+                  <div class="input-field col s12">
+                      <i class="material-icons prefix">chat_bubble_outline</i>
+                      <textarea id="logline" class="materialize-textarea"></textarea>
+                      <label for="logline">Describe your company in one sentence</label>
+                  </div>
+                  <div class="input-field col s12">
+                      <i class="material-icons prefix">mode_edit</i>
+                      <textarea id="description" class="materialize-textarea"></textarea>
+                      <label for="description">What is your company about? It's your time to shine!</label>
+                  </div>
+                   <div class="input-field col s12">
+                      <i class="material-icons prefix">work</i>
+                      <textarea id="skill" class="materialize-textarea"></textarea>
+                      <label for="skills">Skills/Services your company can provide!</label>
+                  </div>
+                  <div class="input-field col s6">
+                    <i class="material-icons prefix">http</i>
+                    <textarea id="url" class="materialize-textarea"></textarea>
+                    <label for="url">Link to your Website</label>
+                  </div>  
+                  <div class="input-field col s12">
+                    <p id="category" style="color:green">Select Your Company Category</p>
+                    <select multiple>
+                      <option class="select" value="">Consulting</option>
+                      <option value="1">Marketing</option>
+                      <option value="2">Web Development</option>
+                      <option value="3">Wellness</option>
+                    </select>
+                  </div>
+                  <div class="input-field col s12">
+                    <h5 id="founder_info">Founder</h5>
+                  </div>
+                   <div class="input-field col s6">
+                      <i class="material-icons prefix">perm_identity</i>
+                      <input id="first_name" type="text" class="validate">
+                      <label for="first_name">First Name</label>
+                    </div>
+                    <div class="input-field col s6">
+                      <input id="last_name" type="text" class="validate">
+                      <label for="last_name">Last Name</label>
+                    </div>
+
+                      <div class="file-field input-field" id="founder_photo">
+                      <div class="btn btn-default waves-effect waves-green z-depth-2" id="img_btn">
+                        <span>Photo</span>
+                        <input type="file">
+                      </div>
+                      <!-- <div class="file-path-wrapper">
+                        <input class="file-path validate" type="text">
+                      </div> -->
+                    </div>
+                </div>
+                 <button ng-click="addUser" id="create" class="btn btn-default waves-effect waves-green z-depth-2">Create</button>
+
+              </form>
+       <!--      </div> -->
+         </div>
+
