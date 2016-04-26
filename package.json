@@ -1,5 +1,5 @@
 {
-  "name": "FullMean_Friends",
+  "name": "service_ninja",
   "version": "0.0.1",
   "dependencies": {
     "bcrypt-nodejs": "0.0.3",
@@ -14,5 +14,21 @@
     "passport-facebook": "^2.1.0",
     "passport-google-oauth": "^1.0.0",
     "passport-local": "^1.0.0"
-  }
+  },
+  "scripts": {
+    "start": "node server.js"
+  },
+  "main": "server.js",
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vaskous27/service_ninja.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/vaskous27/service_ninja/issues"
+  },
+  "homepage": "https://github.com/vaskous27/service_ninja#readme",
+  "description": ""
 }
