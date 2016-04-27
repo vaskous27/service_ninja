@@ -17,8 +17,8 @@ module.exports = function(app) {
 	app.get("/auth/google", passport.authenticate("google", { scope: "https://www.googleapis.com/auth/plus.login" }));
 
 	app.get("/auth/google/callback", passport.authenticate("google", { failureRedirect: "/" }), function(req, res) {
-		res.render("profile", { user: req.session.passport.user });
-		// res.json(json_data);
+		// res.render("success", { user: req.session.passport.user });
+		res.json(json_data);
 		// res.sendfile('../../client/partials/profile.html')
 	});
 }

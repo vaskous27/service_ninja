@@ -6,12 +6,12 @@ var bcrypt = require('bcrypt');
  
 // set up a mongoose model
 var UserSchema = new mongoose.Schema({
-<<<<<<< HEAD
+
     authId: Number,
     name: String,
     provider: String,
-    json_info: Object
-=======
+    json_info: Object,
+
   name: String,
   founder: String,
   description: String,
@@ -36,7 +36,7 @@ var UserSchema = new mongoose.Schema({
         email        : String,
         name         : String
     }
->>>>>>> origin/master
+
 });
  
 module.exports = mongoose.model('User', UserSchema);
