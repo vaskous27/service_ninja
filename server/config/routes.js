@@ -21,9 +21,9 @@ var categories = require('./../controllers/categories.js');
       categories.index(req, res);
     });
 
-      app.post('/users/new', function(req, res) {
+    app.post('/users/new', function(req, res) {
         console.log(req.body, "In routes new_user")
-
+    });
     app.get('/users/:name', function(req, res) {
     Users.findOne(req, res);
     })

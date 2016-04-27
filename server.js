@@ -4,6 +4,9 @@ var bodyParser = require("body-parser");
 var mongoose = require("mongoose");
 var morgan = require('morgan');
 var flash    = require('connect-flash');
+var cookieParser = require('cookie-parser');
+var session = require('express-session');
+var passport = require('passport');
 var app = express();
 
 app.use(bodyParser.json());
