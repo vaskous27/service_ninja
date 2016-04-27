@@ -95,7 +95,6 @@
 
     serviceninja.factory('AuthService', function ($http, Session) {
       var authService = {};
-     
       authService.login = function (credentials) {
         return $http
           .post('/login', credentials)
@@ -179,12 +178,7 @@
   </script>
 </head>
 <body>
-
-      
-
-      <div ng-view="">
-      </div>
-
-
+  <div ng-view="">
+  </div>
 </body>
 </html>

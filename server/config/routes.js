@@ -4,7 +4,7 @@ var Messages = require('./../controllers/messages.js');
 var services = require('./../controllers/services.js');  
 var categories = require('./../controllers/categories.js');  
   module.exports = function(app){
-    app.get('/login', function(req, res) {
+    app.post('/login', function(req, res) {
         console.log(req.body)
     });
         
