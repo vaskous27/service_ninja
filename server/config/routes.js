@@ -4,18 +4,10 @@ var Messages = require('./../controllers/messages.js');
 var services = require('./../controllers/services.js');  
 var categories = require('./../controllers/categories.js');  
   module.exports = function(app){
-    app.get('/login', function(req, res) {
-              // res.render('index.ejs'); // load the index.ejs file 
+    app.get('/login', function(req, res) { 
     });
-    // app.post('/signup', passport.authenticate('local-signup', {
-    //     successRedirect : '/profile', // redirect to the secure profile section
-    //     failureRedirect : '/signup', // redirect back to the signup page if there is an error
-    //     failureFlash : true // allow flash messages
-    // }));
     app.get('/signup', function(req, res) {
       console.log('signup get');
-        // render the page and pass in any flash data if it exists
-        // res.render('signup.ejs', { message: req.flash('signupMessage') });
     });
     app.get('/services', function(req, res){
       services.index(req, res);
