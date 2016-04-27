@@ -4,8 +4,11 @@
 }
 
 #wrapper{
-	width: 1000px;
-	height:750px;
+	width: 1200px;
+	height:auto;
+	background-color: #fff8e1; 
+	padding: 40px;
+
 }
 
 #nav-bar {
@@ -17,6 +20,7 @@
 	padding-left: 20px;
 	padding-bottom: 10px;
 	border-radius: 5px;
+	background-color: #b9f6ca;
 }
 
 #logo {
@@ -31,7 +35,8 @@
 
 #buttons {
 	display: inline-block;
-	margin-left: 155px;
+	margin-left: 140px;
+	padding-top: 20px;
 }
 
 #btn1 {
@@ -44,6 +49,7 @@
 
 .btn-default {
 	border-radius: 10px;
+	background-color: #8e24aa;
 }
 
 #main-body {
@@ -54,10 +60,12 @@
 	margin-left: 0px;
 	border-radius: 5px;
 	padding: 20px;
+	background-color: #e8f5e9;
 }
 
 h5 {
 	margin-bottom: 20px;
+	color: green;
 }
 
 #site {
@@ -72,10 +80,13 @@ h5 {
 	margin-left: 0px;
 	border-radius: 5px;
 	padding: 20px;
+	background-color: #e8f5e9;
+	font-weight: bold;
 }
 
 #skills_title {
 	margin-bottom: 10px;
+	font-size: 20px;
 }
 
 #founder {
@@ -93,45 +104,40 @@ h5 {
 
 #founder_title {
 	padding-bottom: 10px;
+	font-size: 20px;
 }
 
 #name {
 	display: inline-block;
 	vertical-align: top;
 	margin-left: 10px;
-}
-
-#dispute {
-	margin-left: 674px;
-	margin-top: 20px;
+	font-size: 18px;
+	font-weight: bold;
 }
 
 .heading {
 	color: green;
 }
 
-#services {
+#services, #reviews {
 
 	border: 1px solid green;
-	width: 200px;
+	width: 300px;
 	height: auto;
+	margin-left: 40px;
 	margin-top: 40px;
-	margin-left: 0px;
 	border-radius: 5px;
 	padding: 20px;
-	display: inline-block;
+	background-color: #fff8e1;
 }
 
-#content {
+#content, #side-content {
 	display: inline-block;
-}
-
-.job_title {
-	margin-bottom: 5px;
+	vertical-align: top;
 }
 
 a {
-	color: purple;
+	color: #7b1fa2 ;
 }
 
 #form_container {
@@ -142,6 +148,7 @@ a {
 	padding-top: 20px;
 	display: block;
 	border-radius: 10px;
+	background-color: #fff8e1;
 }
 
 .message {
@@ -149,11 +156,196 @@ a {
 	font-size: 15px;
 }
 
+.companies {
+	margin-top: 10px;
+}
+
+#email {
+	display: inline-block;
+}
+
 #message_button {
 	margin-left: 20px;
 }
 
+#create_profile, #profile_form {
+	width: 700px;
+	height: auto;
+	border: 1px solid green;
+	padding: 10px;
+	padding-top: 20px;
+	display: block;
+	border-radius: 10px;
+	margin-left: 20px;
+	margin-top: 20px;
+	text-align: center;
+	background-color: #e8f5e9;
 
+}
+
+.box {
+	padding-top: 15px;
+}
+
+#category {
+	color: #9E9E9E;
+	margin-top: 15px;
+}
+
+#founder_info {
+	margin-top: 30px;
+}
+
+.select-wrapper input.select-dropdown {
+	color: silver;
+}
+
+#founder_info{
+	margin-top: 20px;
+}
+
+p#category, .select-wrapper input.select-dropdown {
+	margin-left: 45px;
+}
+
+.select-wrapper input.select-dropdown {
+	width: 93%;
+}
+
+#img_btn {
+	margin-left: 20px;
+	margin-top: 40px;
+	margin-bottom: 30px;
+
+}
+
+.file-field .file-path-wrapper{
+	padding-top: 37px;
+	width: 80%;
+}
+
+.input-field label {
+	color: green;
+}
+
+strong {
+	color: green;
+}
+
+
+
+/* MURPHY DOG SVG */
+
+html {
+  background: #999;
+  backface-visibility: none;
+}
+
+#murphy {
+  width: 360px;
+  margin: auto;
+}
+
+/* SVG ORIGIN */
+
+#murphywhole {
+	
+	transform-origin: 178px 270px;
+}
+
+#tongue {
+	
+	transform-origin: 142px 322px;
+}
+
+#righteye {
+	
+	transform-origin: 260px 224px;
+}
+
+#lefteye {
+	
+	transform-origin: 102px 233px;
+}
+
+/* KEYFRAMES */
+	
+	@keyframes pant {
+  
+  0%, 20%, 40%, 60%, 80%, 100% {
+    transform: translateY(-7px);
+  }
+  
+  10%, 30%, 50%, 70%, 90% {
+    transform: translateY(0px);
+  }
+
+	}
+
+	@keyframes tilt {
+
+	0%, 100%{
+	transform: rotate(0deg);
+	}
+
+	30%, 60% {
+	transform: rotate(7deg);
+	}
+
+	}
+
+	@keyframes blink {
+  
+  90%, 92% {
+    transform: scaleY(1);
+  }
+  
+  91% {
+    transform: scaleY(0);
+  }
+
+	}
+
+/* ANIMATIONS */
+
+#tongue {
+	animation: pant 2s;
+  animation-delay: 5s;
+  
+	}
+
+#murphywhole {
+	animation: tilt 2s;
+	animation-delay: 2s;
+	
+}
+
+#righteye {
+	animation: blink 7s infinite;
+	animation-delay: 2s;
+
+}
+
+#lefteye {
+	animation: blink 7s infinite;;
+	animation-delay: 2s;
+
+}
+
+#review_company {
+	font-size: 18px;
+	font-weight: bold;
+}
+
+#review_title {
+	font-size: 20px;
+}
+
+#create {
+	margin-left: 22px;
+	margin-bottom: 40px;
+	background-color: #00e676;
+}
 
 
 

@@ -3,45 +3,50 @@ var User = mongoose.model('User');
 var Review = mongoose.model('Review');
 module.exports = (function() {
   return {
-// notice how index in the factory(client side) is calling the index method(server side)
-    // index: function(req, res) {
-    //   Friend.find({}, function(err, results) {
-    //     if(err){
-    //         console.log(err);
-    //     }
-    //     else{
-    //         res.json(results);
-    //     }
-    //   })
-    // },
 
-    // post: function(req, res) {
-    // 	Friend.create(req.body, function(err, results) {
-    // 		if(err) {
-    // 			console.log(err);
-    // 		}
-    // 		else {
-    // 			res.json(results);
-    // 		}
-    // 	})
-    // },
+     new: function(req, res){
+                    User.create(req.body, function(err, results) {
+                        if(err) {
+                            console.log(err);
+                        }
+                        else {
+                            res.json(results);
+                        }
+                    })
+            },
 
-    // remove: function(req, res, id) {
-    // 	Friend.remove({_id: id}, function(err) {
-    // 		if(err) {
-    // 			res.send(err);
-    // 		}
-    // 		else {
-    // 			Friend.find({}, function(err, friends) {
-    // 				if (err) {
-    // 					console.log(err);
-    // 				}
-    // 				else{
-    // 					res.json(friends);
-    // 				}
-    // 			})
-    // 		}
-    // 	})
-    // }
+    index: function(req, res){
+                User.find({}, function(err, data){
+                    if(err) {
+                        console.log(err);
+                    }
+                    else {
+                    res.json(data);
+                    }
+                })
+        },
+
+
+    findOne: function(req, res){
+                User.findOne({name: req.params.name}, function(err, data){
+                    if(err) {
+                        console.log(err);
+                    }
+                    else {
+                    res.json(data);
+                    }
+                })
+        },
+
+    edit: function(req, res) {
+                User.update({name: "whatever"}, {$set: {location: "Echo Park"}}, function (err, data) {
+                  if (err) {
+                    return handleError(err);
+                  }
+                  res.send(data);
+                });
+    }
+
+
   }
 })();
