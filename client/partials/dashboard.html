@@ -1,97 +1,46 @@
- <div id="wrapper">
-
-      <div id ="nav-bar" class="z-depth-4">
+<div ng-controller="companyEditController">
+ <div id="edit_wrapper">
+      <h4 style="color:green">Edit Profile</h4> 
+      <form>
+      <div class="z-depth-4 company_name">
           <img id="logo" src= "/img/yogaworks.jpg" alt="yogaworks logo" height="100" width="100">
           <div id="title">
-            <h3 class="heading"> Yogaworks </h3>
-            <p class="p"> We stretch you into shape whether you like it or not...</p>
+            <h3 class="heading"> <input ng-model="edit_user.name" value="Yogaworks" type="text" class="validate">
+                    <label for="name">Company Name</label></h3>
+            <p class="p"> <textarea ng-model="edit_user.logline" class="materialize-textarea"></textarea>
+                      <label for="logline">Describe your company in one sentence</label></p>
             <p class="p" id="categories"> &#149; Yoga &#149; Wellness &#149; Healing &#149; Health &#149; Exercize &#149; Spiritual</p>
           </div>
 
-          <div id="buttons">
-            <a href="/message" class="btn btn-default waves-effect waves-green z-depth-2">Connect</a>
-            <a href="/" id= "btn1" class="btn btn-default waves-effect waves-green z-depth-2">Services</a>
+          <div class="buttons">
+            <a href="" class="btn btn-default waves-effect waves-green z-depth-2">View Profile</a>
+            <a href="/#/profile/57211b97408722261af290ff" id= "btn1" class="btn btn-default waves-effect waves-green z-depth-2">Services</a>
           </div>
       </div>
 
       <div id="content">
 
-        <div id="main-body" class="z-depth-4">
-          <i class="material-icons" style="color:green">mode_edit</i>
+        <div class="z-depth-4 description">
           <h5 class="heading">Description:</h5>
-          <p> Yogaworks is rethinking how ideas and stories are shared with the world. We believe: 
+          <p><textarea ng-model="edit_user.description" class="materialize-textarea"></textarea> </p>
 
-          - Great ideas can come from anywhere
-          - People create better things together
-          - Design matters at a deep level
-
-          We also care deeply about how media shapes the lives of individuals and the decisions of society — and we think it can be better. 
-
-          We have a world-class engineering and design team, which we are looking to grow slowly and deliberately. Let us know if you're interested. </p>
-
-          <p id="site"><strong class="heading">Website:</strong><a href=""> www.drugsaregoodforyou.com</a> </p>
+          <p id="site"><strong class="heading">Website:</strong><input ng-model="edit_user.url" type="text" class="validate"></a> </p>
         </div>
 
-        <div id="skills" class="z-depth-4">
+        <div class="skills z-depth-4">
           <p class="heading" id="skills_title"><strong>Skills:</strong></p>
-          <ul>
-            <li>&#149; Yoga Classes</li>
-            <li>&#149; Wellness Seminars</li>
-            <li>&#149; Yoga Gear</li>
-            <li>&#149; Nutrition Classes</li>
-          </ul>
+          <input ng-model="edit_user.skills" type="text" class="validate">
         </div>
 
-        <div id="founder" class="z-depth-4">
+        <div class="z-depth-4 founder">
           <p class="heading" id="founder_title"><strong>Founder</strong></p>
           <img src="/img/yogafounder.jpg" width="150" height="auto">
-          <p id="name">Rainbow Paisley</p>
+          <p id="name" class="edit_founder"><label for="first_name">First Name</label><input ng-model="new_user.founder_first" type="text" class="validate"><label for="first_name">Last Name</label><input ng-model="edit_user.founder_last" type="text" class="validate"></p>
+           <button ng-click="editUser()" id="edit" class="btn btn-default waves-effect waves-green z-depth-2">Submit</button>
         </div>
       </div>
 
-        <div id="side-content">
-           <div id="services" class="z-depth-4">
-              <h5 class="heading"> Services Requested </h5>
-
-              <div class="box">
-                <p class="job_title"><strong><a href="">Front-End Engineer</a></strong></p>
-                <p><strong>Skills Needed: </strong> Web Development</p>
-                <p><strong>Skills Offered:</strong> Corporate Yoga Classes</p>
-              </div>
-
-              <div class="box">
-                <p class="job_title"><strong><a href="">Front-End Engineer</a></strong></p>
-                <p><strong>Skills Needed: </strong> Web Development</p>
-                <p><strong>Skills Offered:</strong> Corporate Yoga Classes</p>
-              </div>
-
-              <div class="box">
-                <p class="job_title"><strong><a href="">Front-End Engineer</a></strong></p>
-                <p><strong>Skills Needed: </strong> Web Development</p>
-                <p><strong>Skills Offered:</strong> Corporate Yoga Classes</p>
-              </div>
-
-              <div class="box">
-                <p class="job_title"><strong><a href="">Front-End Engineer</a></strong></p>
-                <p><strong>Skills Needed: </strong> Web Development</p>
-                <p><strong>Skills Offered:</strong> Corporate Yoga Classes</p>
-              </div>
-           </div>
-
-          <div id="reviews" class="z-depth-4">
-              <h5 id="review_title">Reviews</h5>
-              <p id="review_company"><a href="">Space X</a></p>
-              <p> <img src=/img/mushroom.png width="40" height="30">
-             <img src=/img/mushroom.png width="40" height="30">
-             <img src=/img/mushroom.png width="40" height="30">
-              <img src=/img/mushroom.png width="40" height="30"></p>
-              <p>This company is awesome to work with. The services we exchanged were a website for corporate yoga classes. They really took good care of my employees and some even converted to Zen Buddhism!</p>
-          </div>
-         </div>
-
-        <!-- <div id="dispute">
-          <a href="" class="btn btn-default">Dispute</a>
-        </div> -->
+      </form>
 
         <div id="murphy">
   <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" x="0px" y="0px" width="358.602px" height="446.042px" viewBox="0 0 358.602 446.042" enable-background="new 0 0 358.602 446.042" xml:space="preserve">
@@ -144,4 +93,5 @@
 </g>
 </svg>
   </div>
+</div>
 </div>
