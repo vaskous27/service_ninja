@@ -1,12 +1,89 @@
-<div class="container">
+<script type="text/javascript">
+  $(document).ready(function() {
+  $('.modal-trigger').leanModal();
+          });
+</script>
 
-    <div class="jumbotron text-center">
-        <h1><span class="fa fa-lock"></span>Service Ninja</h1>
-
-        <p>Login or Register with:</p>
-
-        <a href="#/login" class="btn btn-default">Login</a>
-        <a href="#/signup" class="btn btn-default">Signup</a>
+<nav class="light-blue lighten-1" role="navigation">
+    <div class="nav-wrapper container"><a id="logo-container" href="#" class="brand-logo">ServiceNinja</a>
+      <ul class="right hide-on-med-and-down">
+        <li><a href="#/howitworks">How it works</a></li>
+        <!-- <li><a href="#modal1" class="modal-trigger1">Login/Register</a></li> -->
+        <li><a href="#/about">About the Company</a></li>
+        <button data-target="modal1" class="btn modal-trigger">Login</button>
+      </ul>
+      <a href="#" data-activates="nav-mobile" class="button-collapse"><i class="material-icons">menu</i></a>
     </div>
+  </nav>
+ <div class='main-page'>
+  <div class="section no-pad-bot" id="index-banner">
+    <div class="container">
+      <br><br>
+      <h1 class="header center orange-text">How can you help?</h1>
+      <div class="row center">
+        <h5 class="header col s12 light">Trade the skills you have for skills you need</h5>
+      </div>
+      <div class="row center">
+        <a href="#" id="download-button" class="btn-large waves-effect waves-light orange">Get Started</a>
+      </div>
+      <br><br>
 
+    </div>
+  </div>
+
+
+  <div class="container ">
+    <div class="section">
+
+      <!--   Icon Section   -->
+      <div class="row">
+        <div class="col s12 m4">
+          <div class="icon-block">
+            <h2 class="center light-blue-text"><i class="material-icons large">swap_horiz</i></h2>
+            <h5 class="center">HERP DERP DERP</h5>
+
+            <p class="light">Herp derpsum derp tee sherpus terp derps. Perp sherlamer sherper derp berps herp le merp. Herpsum derpler berps le, berp derp merp sherlamer herpem. Derpsum ler tee herpy sherlamer. Berps tee nerpy me merp berp ter pee. Sherlamer sherpus nerpy derpsum.</p>
+          </div>
+        </div>
+
+        <div class="col s12 m4">
+          <div class="icon-block">
+            <h2 class="center light-blue-text"><i class="material-icons large">group</i></h2>
+            <h5 class="center">DERP THE HERP</h5>
+
+            <p class="light">Herp derpsum derp tee sherpus terp derps. Perp sherlamer sherper derp berps herp le merp. Herpsum derpler berps le, berp derp merp sherlamer herpem. Derpsum ler tee herpy sherlamer. Berps tee nerpy me merp berp ter pee. Sherlamer sherpus nerpy derpsum.</p>
+          </div>
+        </div>
+
+        <div class="col s12 m4">
+          <div class="icon-block">
+            <h2 class="center light-blue-text"><i class="material-icons large">thumb_up</i></h2>
+            <h5 class="center">AND DERPING THE HERP</h5>
+
+            <p class="light">Herp derpsum derp tee sherpus terp derps. Perp sherlamer sherper derp berps herp le merp. Herpsum derpler berps le, berp derp merp sherlamer herpem. Derpsum ler tee herpy sherlamer. Berps tee nerpy me merp berp ter pee. Sherlamer sherpus nerpy derpsum.</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
 </div>
+
+<div id="modal1" class="modal modal-fixed-footer">
+    <div class="modal-content">
+      <form name="loginForm" ng-controller="LoginController"
+      ng-submit="login(credentials)" novalidate>
+  <label for="username">Username:</label>
+  <input type="text" id="username"
+         ng-model="credentials.username">
+  <label for="password">Password:</label>
+  <input type="password" id="password"
+         ng-model="credentials.password">
+    <div class="modal-footer">
+      <button class="modal-action modal-close waves-effect waves-green btn-flat" >Login</button>
+    </div>
+    </form>
+  </div>
+
+
+

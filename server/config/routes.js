@@ -1,31 +1,35 @@
-
 var Users = require('./../controllers/users.js'); 
 var Reviews = require('./../controllers/reviews.js'); 
 var Messages = require('./../controllers/messages.js');  
-
-
-
-  module.exports = function(app, passport) {
-  	app.get('/login', function(req, res) {
-  		        // res.render('index.ejs'); // load the index.ejs file
-
-       
+var services = require('./../controllers/services.js');  
+var categories = require('./../controllers/categories.js');  
+  module.exports = function(app){
+    app.post('/login', function(req, res) {
+        console.log(req.body)
     });
-
-  	app.post('/signup', passport.authenticate('local-signup', {
-        successRedirect : '/profile', // redirect to the secure profile section
-        failureRedirect : '/signup', // redirect back to the signup page if there is an error
-        failureFlash : true // allow flash messages
-    }));
-
-  	app.get('/signup', function(req, res) {
-  		console.log('signup get');
-        // render the page and pass in any flash data if it exists
-        // res.render('signup.ejs', { message: req.flash('signupMessage') });
+        
+    app.get('/services', function(req, res){
+      services.index(req, res);
+    });
+    app.post('/services', function(req, res){
+      services.create(req, res);
+    });
+    app.get('/services/:id', function(req, res){
+      services.find(req, res);
+    });
+    app.get('/categories', function(req, res){
+      categories.index(req, res);
     });
 
       app.post('/users/new', function(req, res) {
         console.log(req.body, "In routes new_user")
+
+    app.get('/users/:name', function(req, res) {
+    Users.findOne(req, res);
+    })
+
+    app.post('/users/new', function(req, res) {
+
     Users.new(req, res);
     })
 
@@ -61,13 +65,9 @@ var Messages = require('./../controllers/messages.js');
     Reviews.index(req, res);
     })
 
+
     app.get('/review/:name', function(req, res) {
     Reviews.findOne(req, res);
     })
 
-    
   };
-
-
-
-

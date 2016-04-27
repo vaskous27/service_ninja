@@ -1,0 +1,9 @@
+<div id="showContainer">
+<h1>Service Requested: {{currentService.title}}</h1>
+<p>Created: <time>{{currentService.created_at | amDateFormat: 'MMMM Do YYYY, h:mm a'}}</time> (<time am-time-ago="currentService.created_at"></time>)</p>
+<h3>Skills Offered: {{currentService.skills}}</h3>
+<h4>Location: {{currentService.location}}</h4>
+<p>Status: {{currentService.status}}</p>
+<p>Description: {{currentService.description}}</p>
+<!-- {{currentService}} -->
+</div>

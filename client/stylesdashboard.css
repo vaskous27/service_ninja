@@ -414,6 +414,7 @@ html {
 	background-color: #00e676;
 }
 
+<<<<<<< HEAD
 #edit {
 	margin-left: 200px;
 	margin-bottom: 20px;
@@ -679,7 +680,24 @@ body{
 }
 
 
+.main-page {
+	background-image: url("img/main-page-bg.jpeg");
+	background-repeat: no-repeat;
+	background-size: 100%;
+}
 
+.icon-block {
+	background-color: black;
+	background: rgba(0, 0, 0, 0.5);
+	color: white;
+	text-align: center
+}
+
+#index-banner {
+	background-color: black;
+	/*opacity: 0.6;*/
+	background: rgba(0, 0, 0, 0.5);
+}
 
 
 
