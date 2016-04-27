@@ -4,7 +4,7 @@ var Message = mongoose.model('Message');
 module.exports = (function() {
   return {
 
-  	new: function(req, res){
+  	create: function(req, res){
                     Message.create(req.body, function(err, results) {
                         if(err) {
                             console.log(err);

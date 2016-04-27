@@ -41,8 +41,8 @@ var categories = require('./../controllers/categories.js');
     Messages.findOne(req, res);
     })
 
-    app.post('/message/new', function(req, res) {
-    Messages.new(req, res);
+    app.post('/messages', function(req, res) {
+    Messages.create(req, res);
     })
 
     app.get('/messages', function(req, res) {

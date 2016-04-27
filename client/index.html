@@ -12,7 +12,7 @@
   <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment.min.js"></script>
   <script src="//cdnjs.cloudflare.com/ajax/libs/angular-moment/0.9.0/angular-moment.min.js"></script>
   <script src="https://rawgit.com/dwmkerr/angular-modal-service/master/dst/angular-modal-service.js"></script>
-  <link href="/stylesdashboard.css" rel="stylesheet">
+  <!-- <link href="/stylesdashboard.css" rel="stylesheet"> -->
   <link href="/stylesservice.css" rel="stylesheet">
   <script>
       $(document).ready(function() {
@@ -49,6 +49,15 @@
       factory.index = function(callback){
         $http.get('/categories').success(function(output){
           categories = output;
+          callback(output);
+        })
+      }
+      return factory;
+    })
+    serviceninja.factory('messageFactory', function($http){
+      var factory = {};
+      factory.create = function(newMessage, callback){
+        $http.post('/messages', newMessage).success(function(output){
           callback(output);
         })
       }
@@ -118,12 +127,18 @@
           $scope.categories = data;
         })
       });
-      serviceninja.controller('showController', function($scope, serviceFactory, $routeParams){
+      serviceninja.controller('showController', function($scope, serviceFactory, $routeParams, messageFactory){
         $scope.currentService = {};
           serviceFactory.find($routeParams.param1, function(data){
           $scope.currentService = data;
           console.log($scope.currentService);
         })
+          $scope.addMessage = function(){
+            console.log($scope.newMessage);
+            messageFactory.create($scope.newMessage, function(data){
+              console.log(data);
+            })
+          }
   });
   </script>
 </head>
