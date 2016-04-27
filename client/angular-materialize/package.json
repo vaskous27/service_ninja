@@ -1,0 +1,52 @@
+{
+  "name": "angular-materialize",
+  "description": "Angularjs directives for Materialize CSS Framework",
+  "author": {
+    "name": "@krescruz"
+  },
+  "version": "0.1.4",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/krescruz/angular-materialize.git"
+  },
+  "main": "src/index.js",
+  "dependencies": {
+    "node-materialize": "https://github.com/ryepdx/node-materialize/tarball/master"
+  },
+  "devDependencies": {
+    "grunt": "^0.4.5",
+    "grunt-contrib-connect": "^0.9.0"
+  },
+  "gitHead": "f52f86427d185dcd342af6119338ee2bca17b311",
+  "bugs": {
+    "url": "https://github.com/krescruz/angular-materialize/issues"
+  },
+  "homepage": "https://github.com/krescruz/angular-materialize#readme",
+  "_id": "angular-materialize@0.1.4",
+  "scripts": {},
+  "_shasum": "1d56d1b6576a9a80e35f54b6e2066d0740365fba",
+  "_from": "angular-materialize@latest",
+  "_npmVersion": "3.3.12",
+  "_nodeVersion": "5.4.1",
+  "_npmUser": {
+    "name": "webbies",
+    "email": "erik@webbies.dk"
+  },
+  "dist": {
+    "shasum": "1d56d1b6576a9a80e35f54b6e2066d0740365fba",
+    "tarball": "https://registry.npmjs.org/angular-materialize/-/angular-materialize-0.1.4.tgz"
+  },
+  "maintainers": [
+    {
+      "name": "webbies",
+      "email": "erik@webbies.dk"
+    }
+  ],
+  "_npmOperationalInternal": {
+    "host": "packages-12-west.internal.npmjs.com",
+    "tmp": "tmp/angular-materialize-0.1.4.tgz_1461151683971_0.32076970487833023"
+  },
+  "directories": {},
+  "_resolved": "https://registry.npmjs.org/angular-materialize/-/angular-materialize-0.1.4.tgz"
+}
