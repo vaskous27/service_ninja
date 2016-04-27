@@ -1,11 +1,16 @@
+  <div ng-controller="companyViewController">
+
  <div id="wrapper">
 
       <div id ="nav-bar" class="z-depth-4">
           <img id="logo" src= "/img/yogaworks.jpg" alt="yogaworks logo" height="100" width="100">
           <div id="title">
-            <h3 class="heading"> Yogaworks </h3>
-            <p class="p"> We stretch you into shape whether you like it or not...</p>
-            <p class="p" id="categories"> &#149; Yoga &#149; Wellness &#149; Healing &#149; Health &#149; Exercize &#149; Spiritual</p>
+            <h3 class="heading"> {{currentUser.name}} <a href="/#/dashboard/{{currentUser._id}}"><i class="material-icons" style="color:purple">mode_edit</i></a> </h3>
+            <p class="p"> {{currentUser.logline}}</p>
+            <p class="p" id="categories" ng-repeat="category in currentUser.categories">&#149; {{category}} </p>
+
+
+           <!--  <p class="p" id="categories"> &#149; Yoga &#149; Wellness &#149; Healing &#149; Health &#149; Exercize &#149; Spiritual</p> -->
           </div>
 
           <div id="buttons">
@@ -17,35 +22,23 @@
       <div id="content">
 
         <div id="main-body" class="z-depth-4">
-          <i class="material-icons" style="color:green">mode_edit</i>
           <h5 class="heading">Description:</h5>
-          <p> Yogaworks is rethinking how ideas and stories are shared with the world. We believe: 
+          <p> {{currentUser.description}} </p>
 
-          - Great ideas can come from anywhere
-          - People create better things together
-          - Design matters at a deep level
-
-          We also care deeply about how media shapes the lives of individuals and the decisions of society — and we think it can be better. 
-
-          We have a world-class engineering and design team, which we are looking to grow slowly and deliberately. Let us know if you're interested. </p>
-
-          <p id="site"><strong class="heading">Website:</strong><a href=""> www.drugsaregoodforyou.com</a> </p>
+          <p id="site"><strong class="heading">Website:</strong><a href="http://{{currentUser.url}}"> {{currentUser.url}}</a> </p>
         </div>
 
         <div id="skills" class="z-depth-4">
           <p class="heading" id="skills_title"><strong>Skills:</strong></p>
           <ul>
-            <li>&#149; Yoga Classes</li>
-            <li>&#149; Wellness Seminars</li>
-            <li>&#149; Yoga Gear</li>
-            <li>&#149; Nutrition Classes</li>
+            <li>&#149; {{currentUser.skills}}</li>
           </ul>
         </div>
 
         <div id="founder" class="z-depth-4">
           <p class="heading" id="founder_title"><strong>Founder</strong></p>
           <img src="/img/yogafounder.jpg" width="150" height="auto">
-          <p id="name">Rainbow Paisley</p>
+          <p id="name">{{currentUser.founder_first}} {{currentUser.founder_last}}</p>
         </div>
       </div>
 

@@ -28,25 +28,27 @@ module.exports = (function() {
 
 
     findOne: function(req, res){
-                User.findOne({name: req.params.name}, function(err, data){
+                User.findOne({_id: req.params.id}, function(err, data){
+                    console.log(req.params.id)
                     if(err) {
                         console.log(err);
                     }
                     else {
                     res.json(data);
+                    console.log(data)
                     }
                 })
         },
 
+
     edit: function(req, res) {
-                User.update({name: "whatever"}, {$set: {location: "Echo Park"}}, function (err, data) {
-                  if (err) {
-                    return handleError(err);
-                  }
-                  res.send(data);
-                });
+                User.update({_id: req.params.id},{$set: req.body}, function(err, data) {
+                        if(err) {
+                            console.log(err);
+                        }
+                        res.json(data);
+                    })
     }
 
-
-  }
+   }
 })();

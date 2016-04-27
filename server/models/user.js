@@ -2,13 +2,16 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 var UserSchema = new mongoose.Schema({
   name: String,
-  founder: String,
   description: String,
   logline: String,
   skills: String,
   location: String,
   url: String,
-  categories: String,
+  categories: [String],
+  founder_first: String,
+  founder_last: String,
+  founder_photo: String,
+  logo: String,
   reviews: [{type: Schema.Types.ObjectId, ref: 'Review'}],
   local            : {
         email        : String,

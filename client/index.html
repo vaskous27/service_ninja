@@ -29,10 +29,10 @@
             .when('/signup', {
                 templateUrl: 'partials/signup.html'
             })
-            .when('/dashboard', {
+            .when('/dashboard/:id', {
                 templateUrl: 'partials/dashboard.html'
             })            
-             .when('/profile', {
+             .when('/profile/:id', {
                 templateUrl: 'partials/profileView.html'
             })
              .when('/form', {
@@ -49,6 +49,86 @@
       serviceninja.controller('FrontController', function($scope){
       
       });
+
+       serviceninja.factory('companyFactory', function($http, $location) {
+          var factory = {};
+          var user = {};
+          var users = [];
+          var editedUser = {};
+
+            factory.create = function(new_user,callback) {
+             console.log(new_user)
+            $http.post('/users/new', new_user).success(function(res) {
+              user = res;
+              console.log(res)
+              callback(res)
+            })
+          }
+
+           factory.index = function(callback) {
+              $http.get('/users').success(function(output) {
+                users = output;
+                callback(users);
+              })
+          }
+
+          factory.getUser = function(id, callback) {
+            console.log(id, "trying to get a company")
+            $http.get('/users/' + id).success(function(data) {
+              console.log(id, "came back from server with a company")
+              user = data;
+              callback(user);
+            })
+      }
+
+          return factory;
+      }) 
+
+
+       serviceninja.controller('companyFormController', function($scope, $location, companyFactory){
+
+         $scope.users = [];
+         $scope.user = {};
+         $scope.new_user = {};
+
+         $scope.addUser = function() {
+          companyFactory.create($scope.new_user, function(data) {
+               $location.path('/profile/' + data._id);
+            $scope.new_user = {};
+          }) 
+         };
+       })
+
+       serviceninja.controller('companyViewController', function($scope, $location, $routeParams, companyFactory){
+           $scope.users = [];
+           $scope.user = {};
+           $scope.new_user = {};
+           $scope.currentUser = {};
+           var id = $routeParams.id;
+
+           companyFactory.index(function(data) {
+            $scope.users = data;
+          })
+
+           companyFactory.getUser(id, function(data) {
+            console.log(data)
+              $scope.currentUser = data; 
+          })
+
+         })
+
+         serviceninja.controller('companyEditController', function($scope, $location, companyFactory, $routeParams){
+
+             $scope.currentUser = {};
+             $scope.user = {};
+             var id = $routeParams.id;
+
+            companyFactory.getUser(id, function(data) {
+              console.log(data)
+              $scope.currentUser = data; 
+            })
+
+         })
 
   </script>
 </head>

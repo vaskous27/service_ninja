@@ -20,7 +20,7 @@ app.use(flash()); // use connect-flash for flash messages stored in session
 // set up a static file server that points to the "client" directory
 app.use(express.static(path.join(__dirname, '/client')));
 require('./server/config/mongoose.js');
-// require('./server/config/routes.js')(app, passport);
+require('./server/config/routes.js')(app, passport);
 require('./server/config/passport')(passport); // pass passport for configuration
 
 app.listen(8000, function() {
