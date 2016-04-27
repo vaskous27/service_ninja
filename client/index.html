@@ -94,7 +94,7 @@
     })
 
     serviceninja.factory('AuthService', function ($http, Session) {
-      var authService = {};
+      var authService = {};  
       authService.login = function (credentials) {
         return $http
           .post('/login', credentials)
@@ -129,7 +129,7 @@
       notAuthorized: 'auth-not-authorized'
     })
 
-    .constant('USER_ROLES', {
+    serviceninja.constant('USER_ROLES', {
       all: '*',
       admin: 'admin',
       editor: 'editor',
@@ -155,7 +155,7 @@
         password: ''
       };
       $scope.login = function (credentials) {
-        console.log($scope.credentials)
+        // console.log($scope.credentials)
         AuthService.login(credentials).then(function (user) {
           $rootScope.$broadcast(AUTH_EVENTS.loginSuccess);
           $scope.setCurrentUser(user);
@@ -178,7 +178,62 @@
   </script>
 </head>
 <body>
+<script type="text/javascript">
+  $(document).ready(function() {
+    $('.modal-trigger').leanModal();
+
+  });
+</script>
+
+<nav class="light-blue lighten-1" role="navigation">
+    <div class="nav-wrapper container"><a id="logo-container" href="#" class="brand-logo">ServiceNinja</a>
+      <ul class="right hide-on-med-and-down">
+        <li><a href="#/howitworks">How it works</a></li>
+        <!-- <li><a href="#modal1" class="modal-trigger1">Login/Register</a></li> -->
+        <li><a href="#/about">About the Company</a></li>
+        <button data-target="modal1" class="btn modal-trigger">Login</button>
+      </ul>
+      <a href="#" data-activates="nav-mobile" class="button-collapse"><i class="material-icons">menu</i></a>
+    </div>
+  </nav>
+  
   <div ng-view="">
   </div>
+
+  <div id="modal1" class="modal modal-fixed-footer">
+    <div class="modal-content">
+      <form name="loginForm" ng-controller="LoginController"
+      ng-submit="login(credentials)" novalidate>
+      <h2>Login!</h2>
+  <label for="username">Username:</label>
+  <input type="text" id="username"
+         ng-model="credentials.username">
+  <label for="password">Password:</label>
+  <input type="password" id="password"
+         ng-model="credentials.password">
+    <div class="modal-footer">
+      <button class="modal-action modal-close waves-effect waves-green btn-flat" >Login</button>
+    </div>
+    </form>
+    </div>
+</div>    
+
+    <div id="modal2" class="modal modal-fixed-footer">
+      <div class="modal-content">
+        <form name="registerForm" ng-controller="LoginController"
+        ng-submit="login(credentials)" novalidate>
+        <h2>Register!</h2>
+    <label for="username">Username:</label>
+    <input type="text" id="username"
+           ng-model="credentials.username">
+    <label for="password">Password:</label>
+    <input type="password" id="password"
+           ng-model="credentials.password">
+      <div class="modal-footer">
+        <button class="modal-action modal-close waves-effect waves-green btn-flat" >Register</button>
+      </div>
+    </form>
+  </div>
+</div>
 </body>
 </html>
