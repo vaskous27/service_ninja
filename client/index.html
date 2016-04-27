@@ -1,15 +1,19 @@
 <html ng-app="serviceninja">
 <head>
   <title>Service Ninjas</title>
+  <linke rel="stylesheet" href="http://getbootstrap.com/dist/css/bootstrap.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.6/css/materialize.min.css">
   <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+  <script src="http://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.1.0/bootstrap.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.6/js/materialize.min.js"></script>
 	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.5/angular.min.js"></script>
 	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.5/angular-route.min.js"></script>
   <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment.min.js"></script>
   <script src="//cdnjs.cloudflare.com/ajax/libs/angular-moment/0.9.0/angular-moment.min.js"></script>
-  <link href="/stylesdashboard.css" rel="stylesheet">
+  <script src="https://rawgit.com/dwmkerr/angular-modal-service/master/dst/angular-modal-service.js"></script>
+  <!-- <link href="/stylesdashboard.css" rel="stylesheet"> -->
+  <link href="/stylesservice.css" rel="stylesheet">
   <script>
       $(document).ready(function() {
           $('select').material_select();
@@ -28,7 +32,7 @@
       }
       factory.create = function(newService, callback){
         $http.post('/services', newService).success(function(output){
-          currnetService = output;
+          currentService = output;
           callback(output);
         })
       }
@@ -37,17 +41,6 @@
           callback(output);
         })
       }
-      // factory.getQuestion = function(callback){
-      //   if(currentQuestion) callback(currentQuestion);
-      //   else{
-      //     $location.path('/');
-      //   }
-      // }
-      // factory.update = function(question, callback){
-      //   $http.post('updateQuestions', question).success(function(output){
-      //     callback(output);
-      //   })
-      // }
       return factory;
     })
     serviceninja.factory('categoryFactory', function($http){
@@ -64,16 +57,6 @@
 //routes
       serviceninja.config(function ($routeProvider) {
           $routeProvider
-            // .when('/dashboard', {
-            //     templateUrl: 'partials/dashboard.html'
-            // })
-            //  .when('/profile', {
-            //     templateUrl: 'partials/profile.html'
-            // })
-            //  .when('/',{
-            //     templateUrl: 'static/partials/front.html',
-            //     controller: 'HomeController'
-            // })
             .when('/login', {
                 templateUrl: 'partials/login.html'
             })
@@ -107,15 +90,13 @@
             .when('/show/:param1',{
                 templateUrl: 'partials/showPartial.html',
                 controller: 'showController'
-            }) 
+            })
           })                   
 //controllers
       serviceninja.controller('FrontController', function($scope){
       
       });
       serviceninja.controller('serviceController', function($scope, serviceFactory, categoryFactory){
-        // var vm = this;
-        // vm.time = new Date();
         $scope.services = {};
         serviceFactory.index(function(data){
           $scope.services = data;
@@ -132,11 +113,6 @@
           serviceFactory.create($scope.newService, function(data){
             console.log(data);
           })
-          //
-          //$scope TO DO:
-          //update a _user
-          //update reviews
-          //
         }
         categoryFactory.index(function(data){
           $scope.categories = data;
@@ -144,20 +120,26 @@
       });
       serviceninja.controller('showController', function($scope, serviceFactory, $routeParams){
         $scope.currentService = {};
-        serviceFactory.find($routeParams.param1, function(data){
+          serviceFactory.find($routeParams.param1, function(data){
           $scope.currentService = data;
           console.log($scope.currentService);
         })
-      })
+  });
   </script>
 </head>
 <body>
-<div class="container">
-<div id="header">
-<a href="#/services">Home</a> | <a href="#/services">View All Services</a>
+<div class="navbar-fixed">
+  <nav>
+    <div class="nav-wrapper cyan darken-4">
+      <a href="#/" class="brand-logo grey-text text-lighten-3">Service Ninja</a>
+      <ul id="nav-mobile" class="right hide-on-med-and-down cyan darken-4 grey-text text-lighten-3">
+        <li><a href="#/services">Home</a></li>
+        <li><a href="#/services">View All Services</a></li>
+      </ul>
+    </div>
+  </nav>
 </div>
     <div ng-view="">
     </div>
-</div>
 </body>
 </html>

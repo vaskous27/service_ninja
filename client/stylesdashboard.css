@@ -237,7 +237,7 @@ strong {
 /* MURPHY DOG SVG */
 
 html {
-  background: #999;
+  /*background: #999;*/
   backface-visibility: none;
 }
 
@@ -342,6 +342,7 @@ html {
 }
 
 #create {
+	margin-top: 10%;
 	margin-left: 22px;
 	margin-bottom: 40px;
 	background-color: #00e676;
