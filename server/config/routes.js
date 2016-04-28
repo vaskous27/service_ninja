@@ -5,6 +5,7 @@ var services = require('./../controllers/services.js');
 var categories = require('./../controllers/categories.js');
 var passport = require('passport');
 var bcrypt = require('bcrypt');
+var User = require('./../models/user.js');
 // require('./passport')(passport);
 
   module.exports = function(app){

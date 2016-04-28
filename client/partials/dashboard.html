@@ -1,6 +1,10 @@
-<div ng-controller="companyEditController">
+<div>
  <div id="edit_wrapper">
       <h4 style="color:green">Edit Profile</h4> 
+      <ul>
+  <li>Name: <span ng-bind="profile.name"></span></li>
+  <li>Email:  <span ng-bind="profile.local.email"></span></li>
+</ul>
       <form>
       <div class="z-depth-4 company_name">
           <img id="logo" src= "/img/yogaworks.jpg" alt="yogaworks logo" height="100" width="100">
