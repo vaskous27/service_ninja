@@ -18,6 +18,7 @@
       $(document).ready(function() {
           $('.modal-trigger').leanModal();
           $('select').material_select();
+          // the "href" attribute of .modal-trigger must specify the modal ID that wants to be triggered        
           });
   	  var serviceninja = angular.module('serviceninja', ['ngRoute', 'angularMoment']);
 //factories
@@ -64,19 +65,113 @@
       }
       return factory;
     })
-//routes
+    serviceninja.factory('AuthService', function ($http, Session) {
+      var authService = {};
+      authService.login = function (credentials) {
+        return $http
+          .post('/login', credentials)
+          .then(function (res) {
+            Session.create(res.data.id, res.data.user.id,
+                           res.data.user.role);
+            return res.data.user;
+          });
+      };
+     
+      authService.isAuthenticated = function () {
+        return !!Session.userId;
+      };
+     
+      authService.isAuthorized = function (authorizedRoles) {
+        if (!angular.isArray(authorizedRoles)) {
+          authorizedRoles = [authorizedRoles];
+        }
+        return (authService.isAuthenticated() &&
+          authorizedRoles.indexOf(Session.userRole) !== -1);
+      };
+     
+      return authService;
+    })
+
+    serviceninja.constant('AUTH_EVENTS', {
+      loginSuccess: 'auth-login-success',
+      loginFailed: 'auth-login-failed',
+      logoutSuccess: 'auth-logout-success',
+      sessionTimeout: 'auth-session-timeout',
+      notAuthenticated: 'auth-not-authenticated',
+      notAuthorized: 'auth-not-authorized'
+    })
+
+    .constant('USER_ROLES', {
+      all: '*',
+      admin: 'admin',
+      editor: 'editor',
+      guest: 'guest'
+    })
+
+       serviceninja.factory('companyFactory', function($http, $location) {
+          var factory = {};
+          var user = {};
+          var users = [];
+          var editedUser = {};
+
+            factory.create = function(new_user,callback) {
+             console.log(new_user)
+            $http.post('/users/new', new_user).success(function(res) {
+              user = res;
+              console.log(res)
+              callback(res)
+            })
+          }
+
+           factory.index = function(callback) {
+              $http.get('/users').success(function(output) {
+                users = output;
+                callback(users);
+              })
+          }
+
+          factory.getUser = function(id, callback) {
+            console.log(id, "trying to get a company")
+            $http.get('/users/' + id).success(function(data) {
+              console.log(id, "came back from server with a company")
+              user = data;
+              callback(user);
+            })
+      }
+
+          return factory;
+      }) 
+
+
       serviceninja.config(function ($routeProvider) {
           $routeProvider
+            .when('/',{
+                templateUrl: 'partials/front.html',
+                // controller: 'HomeController'
+            })  
             .when('/login', {
                 templateUrl: 'partials/login.html'
             })
             .when('/signup', {
                 templateUrl: 'partials/signup.html'
             })
+            .when('/dashboard/:id', {
+                  templateUrl: 'partials/front.html',
+                  controller: 'ApplicationController'
+            })
+            .when('/howitworks',{
+                  templateUrl: 'partials/how-it-works.html'
+            })
+            .when('/about',{
+                  templateUrl: 'partials/about.html'
+            })
+            .when('/register', {
+                templateUrl: 'partials/register.html'
+            }) 
             .when('/dashboard', {
                 templateUrl: 'partials/dashboard.html'
             })            
-             .when('/profile', {
+             .when('/profile/:id', {
                 templateUrl: 'partials/profileView.html'
             })
              .when('/form', {
@@ -84,18 +179,10 @@
             })
             .when('/message', {
                 templateUrl: 'partials/message.html'
-            })         
+            })            
             .when('/services',{
                 templateUrl: 'partials/servicePartial.html',
-                controller: 'serviceController'
-            })
-            .when('/',{
-                templateUrl: 'partials/servicePartial.html',
-                controller: 'serviceController'
-            })
-            .when('/addServices',{
-                templateUrl: 'partials/addServicePartial.html',
-                controller: 'addServiceController'
+                controller: 'serviceController'    
             })
             .when('/show/:param1',{
                 templateUrl: 'partials/showPartial.html',
@@ -112,12 +199,50 @@
             .when('/myServices', {
                 templateUrl: 'partials/myServicesPartial.html',
                 controller: 'myServicesController'
+            })                    
+            .otherwise({
+              redirectTo: '/'
             })
-          })                   
-//controllers
-      serviceninja.controller('FrontController', function($scope){
+          })
+       serviceninja.controller('companyFormController', function($scope, $location, companyFactory){
+         $scope.users = [];
+         $scope.user = {};
+         $scope.new_user = {};
+         $scope.addUser = function() {
+          companyFactory.create($scope.new_user, function(data) {
+               $location.path('/profile/' + data._id);
+            $scope.new_user = {};
+          }) 
+         };
+       })
+       serviceninja.controller('companyViewController', function($scope, $location, $routeParams, companyFactory){
+           $scope.users = [];
+           $scope.user = {};
+           $scope.new_user = {};
+           $scope.currentUser = {};
+           var id = $routeParams.id;
+           companyFactory.index(function(data) {
+            $scope.users = data;
+          })
+           companyFactory.getUser(id, function(data) {
+            console.log(data)
+              $scope.currentUser = data; 
+          })
+         })
+         serviceninja.controller('companyEditController', function($scope, $location, companyFactory, $routeParams){
+
+             $scope.currentUser = {};
+             $scope.user = {};
+             var id = $routeParams.id;
+
+            companyFactory.getUser(id, function(data) {
+              console.log(data)
+              $scope.currentUser = data; 
+            })
+          })
+      // serviceninja.controller('FrontController', function($scope){
       
-      });
+      // });
       serviceninja.controller('serviceController', function($scope, serviceFactory, categoryFactory){
         $scope.services = {};
         serviceFactory.index(function(data){
@@ -178,6 +303,47 @@
             })
           }
   });
+
+
+    serviceninja.service('Session', function () {
+      this.create = function (sessionId, userId, userRole) {
+        this.id = sessionId;
+        this.userId = userId;
+        this.userRole = userRole;
+      };
+      this.destroy = function () {
+        this.id = null;
+        this.userId = null;
+        this.userRole = null;
+      };
+    })
+
+    serviceninja.controller('LoginController', function ($scope, $rootScope, AUTH_EVENTS, AuthService) {
+      $scope.credentials = {
+        username: '',
+        password: ''
+      };
+      $scope.login = function (credentials) {
+        console.log($scope.credentials)
+        AuthService.login(credentials).then(function (user) {
+          $rootScope.$broadcast(AUTH_EVENTS.loginSuccess);
+          $scope.setCurrentUser(user);
+        }, function () {
+          $rootScope.$broadcast(AUTH_EVENTS.loginFailed);
+        });
+      };
+    })
+    serviceninja.controller('ApplicationController', function ($scope, USER_ROLES,AuthService) {
+      $scope.currentUser = null;
+      $scope.userRoles = USER_ROLES;
+      $scope.isAuthorized = AuthService.isAuthorized;
+     
+      $scope.setCurrentUser = function (user) {
+        $scope.currentUser = user;
+      };
+    })
+  </script>
+</head>
   </script>
 </head>
 <body>
@@ -186,7 +352,7 @@
     <div class="nav-wrapper cyan darken-4">
       <a href="#/" class="brand-logo grey-text text-lighten-3">Service Ninja</a>
       <ul id="nav-mobile" class="right hide-on-med-and-down cyan darken-4 grey-text text-lighten-3">
-        <li><a href="#/services">Home</a></li>
+        <li><a href="#/">Home</a></li>
         <li><a href="#/services">View All Services</a></li>
         <li><a href="#/companies">View All Companies</a></li>
         <li><a href="#/inbox">Inbox</a></li>
@@ -198,5 +364,6 @@
 </div>
     <div ng-view="">
     </div>
+<body>
 </body>
 </html>

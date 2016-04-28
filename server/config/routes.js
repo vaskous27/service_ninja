@@ -5,10 +5,15 @@ var services = require('./../controllers/services.js');
 var categories = require('./../controllers/categories.js');  
   module.exports = function(app){
     app.get('/login', function(req, res) { 
+
     });
     app.get('/signup', function(req, res) {
       console.log('signup get');
     });
+    app.post('/login', function(req, res) {
+        console.log(req.body)
+    });
+        
     app.get('/services', function(req, res){
       services.index(req, res);
     });
@@ -21,11 +26,16 @@ var categories = require('./../controllers/categories.js');
     app.get('/categories', function(req, res){
       categories.index(req, res);
     });
+
+    app.post('/users/new', function(req, res) {
+        console.log(req.body, "In routes new_user")
+    });
     app.get('/users/:name', function(req, res) {
     Users.findOne(req, res);
     })
 
     app.post('/users/new', function(req, res) {
+
     Users.new(req, res);
     })
 
@@ -33,24 +43,24 @@ var categories = require('./../controllers/categories.js');
     Users.index(req, res);
     })
 
-    app.put('/users/edit/:name', function(req, res) {
-    Users.edit(req, res);
+    app.get('/users/:id', function(req, res) {
+    Users.findOne(req, res);
     })
 
-    app.get('/message/:name', function(req, res) {
-    Messages.findOne(req, res);
+    app.put('/users/edit/:id', function(req, res) {
+    Users.edit(req, res);
     })
 
     app.post('/messages', function(req, res) {
     Messages.create(req, res);
     })
 
-    app.get('/messages', function(req, res) {
+      app.get('/messages', function(req, res) {
     Messages.index(req, res);
     })
 
-    app.get('/review/:name', function(req, res) {
-    Reviews.findOne(req, res);
+    app.get('/message/:name', function(req, res) {
+    Messages.findOne(req, res);
     })
 
     app.post('/review/new', function(req, res) {
@@ -60,4 +70,10 @@ var categories = require('./../controllers/categories.js');
     app.get('/reviews', function(req, res) {
     Reviews.index(req, res);
     })
+
+
+    app.get('/review/:name', function(req, res) {
+    Reviews.findOne(req, res);
+    })
+
   };
