@@ -124,7 +124,8 @@ var User = require('./../models/user.js');
         else{
           console.log('unauthorized access attempt!');
           // if they aren't redirect them to the home page
-          res.redirect('/');
+          // res.redirect('/');
+          return res.status(401).json({ success: false, message: 'authentication failed' });
         }
     
 }

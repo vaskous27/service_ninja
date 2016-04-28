@@ -25,8 +25,7 @@
       serviceninja.config(function ($routeProvider) {
           $routeProvider
             .when('/',{
-                templateUrl: 'partials/front.html',
-                controller: 'loginsController'
+                templateUrl: 'partials/front.html'
             })  
             .when('/login', {
                 templateUrl: 'partials/login.html'
@@ -123,10 +122,6 @@
 
          })  
 
-          
-      // serviceninja.controller('FrontController', function($scope){
-      
-      // });
       serviceninja.controller('serviceController', function($scope, serviceFactory, categoryFactory){
         $scope.services = {};
         serviceFactory.index(function(data){
@@ -191,7 +186,15 @@
 
          //lances login factories and controllers below:
 
-         serviceninja.factory('loginFactory', function($http, $location){
+        serviceninja.factory('profileFactory', function($http, loginFactory){
+          var factory = {};
+          factory.show = function(success, fail){
+            $http.get('/profile').then(success, fail)
+          }
+          return factory;
+        })
+
+         serviceninja.factory('loginFactory', function($http, $rootScope, $location){
           var factory = {};
           var currentUser = null;
 
@@ -217,6 +220,7 @@
 
           factory.logout = function(){
             $http.get('/logout').then(function(){
+              $rootScope.profile1 = null;
               $location.path('/');
             });
           }
@@ -224,11 +228,20 @@
           return factory;
         })
 
-        serviceninja.controller('loginsController', function($scope, loginFactory, $location){
+        serviceninja.controller('loginsController', function($rootScope, $scope, loginFactory, profileFactory, $location){
           console.log("in loginsController")
+          $scope.profile = null;
           $scope.login = function(data){
             $scope.flash = {};
             loginFactory.login(data, function(res){
+              profileFactory.show(function(res){
+                console.log(res, 'blah blah also a derp')
+                $scope.profile = res.data;
+                $rootScope.profile1 = res.data;
+                // $scope.$apply()
+              }, function(){
+                console.log('something went wrong');
+              })
               $location.path('/dashboard')
             }, function(res){
               $scope.flash.message = res.data.message;
@@ -239,22 +252,27 @@
             $scope.flash = {};
             loginFactory.register(data, function(res){
               $scope.flash.message = res.data.message;
+              console.log($scope.flash.message)
               $scope.newUser = {}
             })
           }
+
+          loginFactory.getCurrent(function(data){
+            $scope.currentUser = data;
+            // console.log($scope.currentUser)
+          })
           $scope.logout = loginFactory.logout;
 
+          // profileFactory.show(function(res){
+          //   // console.log(res.data, 'blah blah im a derp')
+          //   $scope.profile = res.data;
+          // }, function(){
+          //   $scope.profile = null;
+          // })
+
+          
+
         })
-
-
-        serviceninja.factory('profileFactory', function($http, loginFactory){
-          var factory = {};
-          factory.show = function(success, fail){
-            $http.get('/profile').then(success, fail)
-          }
-          return factory;
-        })
-
 
         serviceninja.controller('profilesController', function($scope, loginFactory, profileFactory, $location){
           loginFactory.getCurrent(function(data){
@@ -275,7 +293,7 @@
   </script>
 </head>
 <body>
-<div class="navbar-fixed">
+<div class="navbar-fixed" ng-controller="loginsController">
   <nav>
     <div class="nav-wrapper cyan darken-4">
       <a href="#/" class="brand-logo grey-text text-lighten-3">Service Ninja</a>
@@ -285,7 +303,8 @@
         <li><a href="#/companies">View All Companies</a></li>
         <li><a href="#/inbox">Inbox</a></li>
         <li><a href="#/myServices">My Services</a></li>
-        <li><button data-target="modal1" class="btn modal-trigger">Login</button></li>
+        <li><button ng-if='profile1 != null' ng-click="logout()" class="btn red">Logout</button></li>
+        <li><button ng-if='profile1 == null' data-target="modal1" class="btn modal-trigger">Login</button></li>
       </ul>
     </div>
   </nav>
@@ -315,6 +334,7 @@
   
   <div id="modal1" class="modal modal-fixed-footer" ng-controller='loginsController'>
     <div class="modal-content">
+    <h2>Login to ServiceNinja</h2>
       <form ng-submit="login(loginUser)">
         <label>Email:
           <input type="text" name="email" ng-model="loginUser.email">
@@ -330,6 +350,7 @@
 
     <div id="modal2" class="modal modal-fixed-footer" ng-controller='loginsController'>
       <div class="modal-content">
+      <h2>Register for ServiceNinja</h2>
        <form ng-submit="register(newUser)">
         <label>Name:
           <input type="text" name="name" ng-model="newUser.name">
