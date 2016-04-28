@@ -8,18 +8,7 @@ var bcrypt = require('bcrypt');
 // require('./passport')(passport);
 
   module.exports = function(app){
-
-    app.get('/login', function(req, res) { 
-
-    });
-    app.get('/signup', function(req, res) {
-      console.log('signup get');
-    });
-    app.post('/login', function(req, res) {
-        console.log(req.body)
-    });
-
-        
+     
     app.get('/services', function(req, res){
       services.index(req, res);
     });
@@ -105,6 +94,7 @@ var bcrypt = require('bcrypt');
         }
         req.logIn(user, function(loginErr) {
           if (loginErr) { return next(loginErr); }
+          console.log('success')
           return res.json(user);
         });    
       })(req, res, next);

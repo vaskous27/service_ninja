@@ -35,18 +35,21 @@ passport.use('local-register', new LocalStrategy({
         // we are checking to see if the user trying to login already exists
         User.findOne({ 'local.email' :  email }, function(err, user) {
             // if there are any errors, return the error
-            if (err)
+            if (err) {
+              console.log('error1')
                 return done(err, false, 
                   { success: false, 
                     message: 'Registration failed for... reasons.' }
                 );
+            }
             // check to see if theres already a user with that email
             if (user) {
+              console.log('error2')
                 return done(null, false, 
                   { success: false, message: 'Email already exists.' }
                 );
             } else {
-
+              console.log('error3')
                 // if there is no user with that email
                 // create the user
                 var newUser = new User({name: req.body.name});
