@@ -24,11 +24,8 @@
           $routeProvider
             .when('/',{
                 templateUrl: 'partials/front.html',
-                controller: 'HomeController'
+                controller: 'loginsController'
             })  
-            .when('/login', {
-                templateUrl: 'partials/login.html'
-            })
             .when('/signup', {
                 templateUrl: 'partials/signup.html'
             })
@@ -37,14 +34,13 @@
                   controller: 'ApplicationController'
                 })
             .when('/howitworks',{
-                  templateUrl: 'partials/how-it-works.html'
+                  templateUrl: 'partials/how-it-works.html',
+                  controller: 'loginsController'
                 })
             .when('/about',{
-                  templateUrl: 'partials/about.html'
+                  templateUrl: 'partials/about.html',
+                  controller: 'loginsController'
                 })
-            .when('/register', {
-                templateUrl: 'partials/register.html'
-            }) 
             .when('/dashboard', {
                 templateUrl: 'partials/dashboard.html'
             })            
@@ -96,49 +92,6 @@
         })
       }
       return factory;
-    })
-
-    serviceninja.factory('AuthService', function ($http, Session) {
-      var authService = {};  
-      authService.login = function (credentials) {
-        return $http
-          .post('/login', credentials)
-          .then(function (res) {
-            Session.create(res.data.id, res.data.user.id,
-                           res.data.user.role);
-            return res.data.user;
-          });
-      };
-     
-      authService.isAuthenticated = function () {
-        return !!Session.userId;
-      };
-     
-      authService.isAuthorized = function (authorizedRoles) {
-        if (!angular.isArray(authorizedRoles)) {
-          authorizedRoles = [authorizedRoles];
-        }
-        return (authService.isAuthenticated() &&
-          authorizedRoles.indexOf(Session.userRole) !== -1);
-      };
-     
-      return authService;
-    })
-
-    serviceninja.constant('AUTH_EVENTS', {
-      loginSuccess: 'auth-login-success',
-      loginFailed: 'auth-login-failed',
-      logoutSuccess: 'auth-logout-success',
-      sessionTimeout: 'auth-session-timeout',
-      notAuthenticated: 'auth-not-authenticated',
-      notAuthorized: 'auth-not-authorized'
-    })
-
-    serviceninja.constant('USER_ROLES', {
-      all: '*',
-      admin: 'admin',
-      editor: 'editor',
-      guest: 'guest'
     })
 
        serviceninja.factory('companyFactory', function($http, $location) {
@@ -219,49 +172,89 @@
               $scope.currentUser = data; 
             })
 
-         })
+         })  
+
+         //lances login factories and controllers below:
+
+         serviceninja.factory('loginFactory', function($http, $location){
+          var factory = {};
+          var currentUser = null;
+
+          factory.getCurrent = function(callback){
+            if(currentUser) callback(currentUser);
+            else{
+              $location.path('/');
+            }
+          }
+
+          factory.login = function(data, successHandler, failHandler){
+            $http.post('/login', data).then(function(res){
+              currentUser = res.data;
+              console.log(currentUser, "got a current user");
+              successHandler(res);
+            }, failHandler);
+          }
+
+          factory.register = function(data, successHandler, failHandler){
+            $http.post('/register', data).then(successHandler, failHandler);
+          }
+
+          factory.logout = function(){
+            $http.get('/logout').then(function(){
+              $location.path('/');
+            });
+          }
+
+          return factory;
+        })
+
+        serviceninja.controller('loginsController', function($scope, loginFactory, $location){
+          console.log("in loginsController")
+          $scope.login = function(data){
+            $scope.flash = {};
+            loginFactory.login(data, function(res){
+              $location.path('/profile')
+            }, function(res){
+              $scope.flash.message = res.data.message;
+              $scope.loginUser = {}
+            })
+          }
+          $scope.register = function(data){
+            $scope.flash = {};
+            loginFactory.register(data, function(res){
+              $scope.flash.message = res.data.message;
+              $scope.newUser = {}
+            })
+          }
+          $scope.logout = loginFactory.logout;
+
+        })
 
 
-    serviceninja.service('Session', function () {
-      this.create = function (sessionId, userId, userRole) {
-        this.id = sessionId;
-        this.userId = userId;
-        this.userRole = userRole;
-      };
-      this.destroy = function () {
-        this.id = null;
-        this.userId = null;
-        this.userRole = null;
-      };
-    })
+        serviceninja.factory('profileFactory', function($http, loginFactory){
+          var factory = {};
+          factory.show = function(success, fail){
+            $http.get('/profile').then(success, fail)
+          }
+          return factory;
+        })
 
-    serviceninja.controller('LoginController', function ($scope, $rootScope, AUTH_EVENTS, AuthService) {
-      $scope.credentials = {
-        username: '',
-        password: ''
-      };
-      $scope.login = function (credentials) {
-        // console.log($scope.credentials)
-        AuthService.login(credentials).then(function (user) {
-          $rootScope.$broadcast(AUTH_EVENTS.loginSuccess);
-          $scope.setCurrentUser(user);
-        }, function () {
-          $rootScope.$broadcast(AUTH_EVENTS.loginFailed);
-        });
-      };
-    })
 
-    serviceninja.controller('ApplicationController', function ($scope, USER_ROLES,AuthService) {
-      $scope.currentUser = null;
-      $scope.userRoles = USER_ROLES;
-      $scope.isAuthorized = AuthService.isAuthorized;
-     
-      $scope.setCurrentUser = function (user) {
-        $scope.currentUser = user;
-      };
-    })
-      
+        serviceninja.controller('profilesController', function($scope, loginFactory, profileFactory, $location){
+          loginFactory.getCurrent(function(data){
+            $scope.currentUser = data;
+          })
+          $scope.logout = loginFactory.logout;
+
+          profileFactory.show(function(res){
+            $scope.profile = res.data;
+          }, function(){
+            console.log('something went wrong');
+          })
+        })
+
   </script>
+
 </head>
 <body>
 <script type="text/javascript">
@@ -285,40 +278,36 @@
   
   <div ng-view="">
   </div>
-
-  <div id="modal1" class="modal modal-fixed-footer">
+  <div id="modal1" class="modal modal-fixed-footer" ng-controller='loginsController'>
     <div class="modal-content">
-      <form name="loginForm" ng-controller="LoginController"
-      ng-submit="login(credentials)" novalidate>
-      <h2>Login!</h2>
-  <label for="username">Username:</label>
-  <input type="text" id="username"
-         ng-model="credentials.username">
-  <label for="password">Password:</label>
-  <input type="password" id="password"
-         ng-model="credentials.password">
-    <div class="modal-footer">
-      <button class="modal-action modal-close waves-effect waves-green btn-flat" >Login</button>
-    </div>
-    </form>
+      <form ng-submit="login(loginUser)">
+        <label>Email:
+          <input type="text" name="email" ng-model="loginUser.email">
+        </label>
+        <label>Password:
+          <input type="password" name="password" ng-model="loginUser.password">
+        </label>
+        <input type="submit"></input>
+        <button class="modal-action modal-close waves-effect waves-green btn-flat">Login</button>
+      </form>
     </div>
 </div>    
 
-    <div id="modal2" class="modal modal-fixed-footer">
+    <div id="modal2" class="modal modal-fixed-footer" ng-controller='loginsController'>
       <div class="modal-content">
-        <form name="registerForm" ng-controller="LoginController"
-        ng-submit="login(credentials)" novalidate>
-        <h2>Register!</h2>
-    <label for="username">Username:</label>
-    <input type="text" id="username"
-           ng-model="credentials.username">
-    <label for="password">Password:</label>
-    <input type="password" id="password"
-           ng-model="credentials.password">
-      <div class="modal-footer">
-        <button class="modal-action modal-close waves-effect waves-green btn-flat" >Register</button>
-      </div>
-    </form>
+       <form ng-submit="register(newUser)">
+        <label>Name:
+          <input type="text" name="name" ng-model="newUser.name">
+        </label>
+        <label>Email:
+          <input type="text" name="email" ng-model="newUser.email">
+        </label>
+        <label>Password:
+          <input type="password" name="password" ng-model="newUser.password">
+        </label>
+        <!-- <input type="submit"></input> -->
+        <button class=" modal-action modal-close waves-effect waves-green btn-flat">Register</button>
+      </form>
   </div>
 </div>
 </body>
