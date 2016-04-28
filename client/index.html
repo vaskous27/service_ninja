@@ -242,7 +242,7 @@
               }, function(){
                 console.log('something went wrong');
               })
-              $location.path('/dashboard')
+              $location.path('/services')
             }, function(res){
               $scope.flash.message = res.data.message;
               $scope.loginUser = {}
