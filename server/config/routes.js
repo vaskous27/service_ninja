@@ -8,6 +8,18 @@ var bcrypt = require('bcrypt');
 // require('./passport')(passport);
 
   module.exports = function(app){
+<<<<<<< HEAD
+=======
+    app.get('/login', function(req, res) { 
+
+    });
+    app.get('/signup', function(req, res) {
+      console.log('signup get');
+    });
+    app.post('/login', function(req, res) {
+        console.log(req.body)
+    });
+>>>>>>> origin/master
         
     app.get('/services', function(req, res){
       services.index(req, res);
@@ -46,8 +58,8 @@ var bcrypt = require('bcrypt');
     Users.edit(req, res);
     })
 
-    app.post('/message/new', function(req, res) {
-    Messages.new(req, res);
+    app.post('/messages', function(req, res) {
+    Messages.create(req, res);
     })
 
       app.get('/messages', function(req, res) {

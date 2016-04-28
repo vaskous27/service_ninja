@@ -2,6 +2,8 @@
   "name": "service_ninja",
   "version": "0.0.1",
   "dependencies": {
+    "angular-materialize": "^0.1.4",
+    "angular-modal-service": "^0.6.10",
     "angular-ui-router": "^0.2.18",
     "bcrypt": "^0.8.6",
     "bcrypt-nodejs": "0.0.3",
@@ -11,6 +13,7 @@
     "ejs": "^2.4.1",
     "express": "~4.2.0",
     "express-session": "^1.13.0",
+    "jquery-modal": "^0.7.0",
     "jwt-simple": "^0.5.0",
     "method-override": "^2.3.5",
     "mongoose": "latest",
