@@ -16,6 +16,7 @@
   <link href="/stylesservice.css" rel="stylesheet">
   <script>
       $(document).ready(function() {
+          $('.modal-trigger').leanModal();
           $('select').material_select();
           });
   	  var serviceninja = angular.module('serviceninja', ['ngRoute', 'angularMoment']);
@@ -56,7 +57,7 @@
     })
     serviceninja.factory('messageFactory', function($http){
       var factory = {};
-      factory.create = function(newMessage, callback){
+      factory.create = function(newMessage, id, callback){
         $http.post('/messages', newMessage).success(function(output){
           callback(output);
         })
@@ -100,6 +101,18 @@
                 templateUrl: 'partials/showPartial.html',
                 controller: 'showController'
             })
+            .when('/companies', {
+                templateUrl: 'partials/companyPartial.html',
+                controller: 'companyDashController'
+            })
+            .when('/inbox', {
+                templateUrl: 'partials/inboxPartial.html',
+                controller: 'inboxController'
+            })
+            .when('/myServices', {
+                templateUrl: 'partials/myServicesPartial.html',
+                controller: 'myServicesController'
+            })
           })                   
 //controllers
       serviceninja.controller('FrontController', function($scope){
@@ -115,13 +128,38 @@
         })
         console.log($scope.services);
       });
-      serviceninja.controller('addServiceController', function($scope, serviceFactory, categoryFactory){
+      serviceninja.controller('companyDashController', function($scope, serviceFactory, categoryFactory){
+        $scope.services = {};
+        categoryFactory.index(function(data){
+          $scope.categories = data;
+        })
+        console.log($scope.services);
+      });
+      serviceninja.controller('inboxController', function($scope, serviceFactory, categoryFactory){
+        $scope.services = {};
+        categoryFactory.index(function(data){
+          $scope.categories = data;
+        })
+        console.log($scope.services);
+      });
+      serviceninja.controller('myServicesController', function($scope, serviceFactory, categoryFactory){
+        $scope.services = {};
+        categoryFactory.index(function(data){
+          $scope.categories = data;
+        })
+        serviceFactory.index(function(data){
+          $scope.services = data;
+        })
+        console.log($scope.services);
+      });
+      serviceninja.controller('addServiceController', function($scope, serviceFactory, categoryFactory, $location){
         $scope.addService = function(){
           $scope.newService.status = "inactive";
           console.log($scope.newService);
           serviceFactory.create($scope.newService, function(data){
             console.log(data);
           })
+          $location.path('/services')
         }
         categoryFactory.index(function(data){
           $scope.categories = data;
@@ -135,7 +173,7 @@
         })
           $scope.addMessage = function(){
             console.log($scope.newMessage);
-            messageFactory.create($scope.newMessage, function(data){
+            messageFactory.create($scope.newMessage, $routeParams.param1, function(data){
               console.log(data);
             })
           }
@@ -150,6 +188,10 @@
       <ul id="nav-mobile" class="right hide-on-med-and-down cyan darken-4 grey-text text-lighten-3">
         <li><a href="#/services">Home</a></li>
         <li><a href="#/services">View All Services</a></li>
+        <li><a href="#/companies">View All Companies</a></li>
+        <li><a href="#/inbox">Inbox</a></li>
+        <li><a href="#/myServices">My Services</a></li>
+        <li><a href="#/logout">Logout</a></li>
       </ul>
     </div>
   </nav>

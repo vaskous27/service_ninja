@@ -1,0 +1,50 @@
+  <div class="row">
+  <div class="left col s2 grey lighten-3">
+  <h5 class="cyan-text text-darken-4">Categories</h5>
+  <select ng-model="cat_name" ng-options="category.name as category.name for category in categories" class="browser-default">
+  <option value="">Choose a Category</option>
+  </select>
+	<h5 class="cyan-text text-darken-4">Location</h5>
+	<select ng-model="location" class="browser-default">
+		<option value="">Choose a Location</option>
+		<option value="Echo Park">Echo Park</option>
+		<option value="Downtown">Downtown</option>
+		<option value="Korea Town">Korea Town</option>
+	</select>
+  <!-- {{categories}} -->
+  </div>
+  <div class="right col s10 grey lighten-3 z-depth-1">
+<!--   <div id="searchBar"><h4>Search Services:</h4> <input type="text" ng-model="filter_name" placeholder="filter"><input id="add" type="button" onclick="location.href='#/addServices';" value="Add a new Service Request"/></div> -->
+  <h4>Search My Services:</h4> 
+    <nav>
+    <div class="nav-wrapper">
+      <form>
+        <div class="input-field cyan darken-4">
+          <input id="search" type="search" required ng-model="filter_name">
+          <label for="search"><i class="material-icons">search</i></label>
+          <i class="material-icons">close</i>
+        </div>
+      </form>
+    </div>
+  </nav>
+<!--   <input id="add" type="button" onclick="location.href='#/addServices';" value="Add a new Service Request"/> -->
+<button id="add" onclick="location.href='#/addServices';" class="btn btn-default waves-effect waves-cyan z-depth-1 cyan darken-3 grey-text text-lighten-3">New Service Request</button>
+  <table id="serviceTable" class="highlight cyan-text text-darken-4">
+    <thead>
+      <tr>
+       <th data-field="title">Service Requested</th><th data-field="user">User</th><th data-field="created">Created At</th><th data-field="skills">Skillz Offered</th><th data-field="location">Location</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+      <tr ng-repeat="service in services | filter: filter_name | filter: cat_name | filter: location">
+      <td><a href="#/show/{{service._id}}">{{service.title}}</a></td>
+     	<td>Kevin</td>
+      <td><time>{{service.created_at | amDateFormat: 'MMMM Do YYYY, h:mm a'}}</time> (<time am-time-ago="service.created_at"></time>)</td>
+     	<td>{{service.skills}}</td>
+     	<td>{{service.location}}</td>
+    	</tr>
+    </tbody>
+  </table>
+  </div>
+  </div>
