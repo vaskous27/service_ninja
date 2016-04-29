@@ -774,11 +774,11 @@
     <div class="nav-wrapper cyan darken-4">
       <a href="#/" class="brand-logo grey-text text-lighten-3">ServiceNinja</a>
       <ul id="nav-mobile" class="right hide-on-med-and-down cyan darken-4 grey-text text-lighten-3">
-        <li><a href="#/">Home</a></li>
-        <li><a href="#/services">View All Services</a></li>
-        <li><a href="#/companies">View All Companies</a></li>
-        <li><a href="#/inbox">Inbox</a></li>
-        <li><a href="#/myServices">My Services</a></li>
+        <li><a ng-if='profile1 != null' href="#/">Home</a></li>
+        <li><a ng-if='profile1 != null' href="#/services">View All Services</a></li>
+        <li><a ng-if='profile1 != null' href="#/companies">View All Companies</a></li>
+        <li><a ng-if='profile1 != null' href="#/inbox">Inbox</a></li>
+        <li><a ng-if='profile1 != null' href="#/myServices">My Services</a></li>
         <li><button ng-if='profile1 != null' ng-click="logout()" class="btn red">Logout</button></li>
         <li><button ng-if='profile1 == null' data-target="modal1" class="btn modal-trigger">Login</button></li>
       </ul>
