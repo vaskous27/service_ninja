@@ -451,7 +451,7 @@
              $scope.user = {};
              $scope.edit_user = {};
              var id = $routeParams.id;
-
+             $scope.edit_user._id = $scope.currentUser._id;
             companyFactory.getUser(id, function(data) {
               $scope.currentUser = data; 
               $scope.edit_user = $scope.currentUser;
@@ -875,7 +875,7 @@
       <div class="modal-content">
       <h2>Register for ServiceNinja</h2>
        <form ng-submit="register(newUser)">
-        <label>Name:
+        <label>Company Name:
           <input type="text" name="name" ng-model="newUser.name">
         </label>
         <label>Email:

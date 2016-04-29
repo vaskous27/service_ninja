@@ -6,7 +6,7 @@
 <div class="container">
 	<div class="serviceForm z-depth-1">
 		<h4>Service Requested: {{currentService.title}}</h4>
-    <p>Requested by: {{userData.name}}</p>
+    <p>Requested by: {{currentService._user.name}}</p>
 		<p>Created: <time>{{currentService.created_at | amDateFormat: 'MMMM Do YYYY, h:mm a'}}</time> (<time am-time-ago="currentService.created_at"></time>)</p>
 		<h5>Skills Offered: {{currentService.skills}}</h5>
 		<h5>Location: {{currentService.location}}</h5>
@@ -19,7 +19,7 @@
   <!-- Modal Structure -->
   <div id="modalMessage" class="modal">
     <div class="modal-content">
-      <h4>Send A Message to {{userData.name}}</h4>
+      <h4>Send A Message to {{currentService._user.name}}</h4>
      <div class="input-field col s6">
 	    <i class="material-icons prefix">email</i>
 		<input id="subject" class="validate" type="text" ng-model="newMessage.subject">
