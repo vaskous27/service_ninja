@@ -1,6 +1,7 @@
 var mongoose = require('mongoose');
 var User = mongoose.model('User');
 var Message = mongoose.model('Message');
+var ObjectID = require('mongoose').Types.ObjectId;
 module.exports = (function() {
   return {
 
@@ -16,29 +17,33 @@ module.exports = (function() {
             },
 
     index: function(req, res){
-				Message.find({}, function(err, data){
-					if(err) {
-						console.log(err);
-					}
-					else {
-				    res.json(data);
-					}
-				})
-	    },
+        console.log(req.params.id)
+               var id = new ObjectID(req.params.id);
+				Message.find({_recipient: id})
+                .populate('_user')
+                .exec(function(err, results){
+                if(err) {
+                     console.log(err);
+                   } else {
+                    console.log(results);
+                     res.json(results);
+                   }
+              })
+            },
 
 
     findOne: function(req, res){
-                Message.findOne({name: req.params.name}, function(err, data){
-                    if(err) {
-                        console.log(err);
-                    }
-                    else {
-                    res.json(data);
-                    }
-                })
+                var id = new ObjectID(req.params.id);
+                Message.findOne({_id: id})
+                .populate('_user')
+                .exec(function(err, results){
+                if(err) {
+                     console.log(err);
+                   } else {
+                    console.log(results);
+                     res.json(results);
+                   }
+              })
+            },
         }
-
-
-
- }
 })();

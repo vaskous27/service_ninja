@@ -27,6 +27,7 @@ nav .input-field{
 	background-color: #eeeeee;
 	/*border:2px solid #37474f;*/
 	height: 90%;
+	/*overflow: auto;*/
 
 }
 .container{
@@ -81,4 +82,7 @@ i{
 }
 #modalMessage{
 	width:35%;
+}
+#serviceTable{
+
 }

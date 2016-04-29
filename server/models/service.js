@@ -8,7 +8,7 @@ var ServiceSchema = new mongoose.Schema({
   created_at:  {type: Date, default: Date.now},
   status: String,
   location: String,
-  _user: {type: Schema.Types.ObjectId, ref: 'Review'},
+  _user: {type: Schema.Types.ObjectId, ref: 'User'},
   reviews: [{type: Schema.Types.ObjectId, ref: 'Review'}]
 });
 var Service = mongoose.model('Service', ServiceSchema);

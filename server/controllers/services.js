@@ -1,16 +1,34 @@
 var mongoose = require('mongoose');
 var Service = mongoose.model('Service');
+var ObjectID = require('mongoose').Types.ObjectId;
 module.exports = (function() {
   return {
 // notice how index in the factory(client side) is calling the index method(server side)
     index: function(req, res) {
-      Service.find({}, function(err, results) {
-        if(err){
-            console.log(err);
-        }
-        else{
-            res.json(results);
-        }
+      Service.find({})
+    .populate('_user')
+      .exec(function(err, results){
+        if(err) {
+             console.log(err);
+           } else {
+            console.log(results);
+             res.json(results);
+           }
+      })
+    },
+    indexUser: function(req, res){
+       var id = new ObjectID(req.params.id);
+      //this is where i need to populate
+      console.log(req.params.id, "Got to indexuser");
+      Service.find({_user: id})
+      .populate('_user')
+      .exec(function(err, results){
+        if(err) {
+             console.log(err);
+           } else {
+            console.log(results);
+             res.json(results);
+           }
       })
     },
     create: function(req, res) {

@@ -1,4 +1,4 @@
-  <div class="row">
+   <div class="row">
   <div class="left col s2 grey lighten-3">
   <h5 class="cyan-text text-darken-4">Categories</h5>
   <select ng-model="cat_name" ng-options="category.name as category.name for category in categories" class="browser-default">
@@ -15,7 +15,8 @@
   </div>
   <div class="right col s10 grey lighten-3 z-depth-1">
 <!--   <div id="searchBar"><h4>Search Services:</h4> <input type="text" ng-model="filter_name" placeholder="filter"><input id="add" type="button" onclick="location.href='#/addServices';" value="Add a new Service Request"/></div> -->
-  <h4>Search My Services:</h4> 
+  <h4>Search My Services:</h4>
+            <!-- <input id="search" type="hidden" required ng-model="user" value="{{userData.name}}">  -->
     <nav>
     <div class="nav-wrapper">
       <form>
@@ -27,22 +28,23 @@
       </form>
     </div>
   </nav>
-<!--   <input id="add" type="button" onclick="location.href='#/addServices';" value="Add a new Service Request"/> -->
-<button id="add" onclick="location.href='#/addServices';" class="btn btn-default waves-effect waves-cyan z-depth-1 cyan darken-3 grey-text text-lighten-3">New Service Request</button>
+<!--   <input id="add" type="button" onclick="location.href='#/addServices';" value="Add a new Service Request"/> --><!-- 
+<button id="add" onclick="location.href='#/addServices';" class="btn btn-default waves-effect waves-cyan z-depth-1 cyan darken-3 grey-text text-lighten-3">New Service Request</button> -->
   <table id="serviceTable" class="highlight cyan-text text-darken-4">
     <thead>
       <tr>
-       <th data-field="title">Service Requested</th><th data-field="user">User</th><th data-field="created">Created At</th><th data-field="skills">Skillz Offered</th><th data-field="location">Location</th>
+       <th data-field="title">Service Requested</th><th data-field="user">User</th><th data-field="created">Created At</th><th data-field="skills">Skillz Offered</th><th data-field="location">Location</th><th data-field="title">Mark As Complete</th>
       </tr>
     </thead>
     <tbody>
       <tr>
-      <tr ng-repeat="service in services | filter: filter_name | filter: cat_name | filter: location">
+      <tr ng-repeat="service in services | filter: filter_name | filter: cat_name | filter: location | filter: user">
       <td><a href="#/show/{{service._id}}">{{service.title}}</a></td>
-     	<td>Kevin</td>
+     	<td>{{service._user.name}}</td>
       <td><time>{{service.created_at | amDateFormat: 'MMMM Do YYYY, h:mm a'}}</time> (<time am-time-ago="service.created_at"></time>)</td>
      	<td>{{service.skills}}</td>
      	<td>{{service.location}}</td>
+      <td><a href="#/remove/{{message._id}}">Remove</a></td>
     	</tr>
     </tbody>
   </table>

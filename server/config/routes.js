@@ -18,6 +18,11 @@ var User = require('./../models/user.js');
       services.create(req, res);
     });
     app.get('/services/:id', function(req, res){
+      console.log("got to routes");
+      services.indexUser(req, res);
+    });
+    app.get('/viewServices/:id', function(req, res){
+      console.log("got to routes");
       services.find(req, res);
     });
     app.get('/categories', function(req, res){
@@ -29,7 +34,6 @@ var User = require('./../models/user.js');
         console.log(req.file, "Img in routes new_user")
         Users.new(req, res);
     });
-
      /** API path that will upload the files */
     app.post('/upload', function(req, res) {
         upload(req,res,function(err){
@@ -66,13 +70,16 @@ var User = require('./../models/user.js');
     Messages.create(req, res);
     })
 
-      app.get('/messages', function(req, res) {
+    app.get('/messages/:id', function(req, res) {
     Messages.index(req, res);
     })
-
-    app.get('/message/:name', function(req, res) {
+    app.get('/singleMessage/:id', function(req, res) {
     Messages.findOne(req, res);
     })
+
+    // app.get('/message/:name', function(req, res) {
+    // Messages.findOne(req, res);
+    // })
 
     app.post('/review/new', function(req, res) {
     Reviews.new(req, res);

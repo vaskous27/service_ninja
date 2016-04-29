@@ -15,9 +15,14 @@
     "express-session": "^1.13.0",
 <<<<<<< HEAD
     "jade": "^1.11.0",
-=======
     "jquery-modal": "^0.7.0",
->>>>>>> 032fd60a3efbcf6558aeb12254b9cb68307f1d68
+=======
+
+    "jade": "^1.11.0",
+
+    "jquery-modal": "^0.7.0",
+
+>>>>>>> fb673ed5537514e6b6702edd7e8e779c9f880a42
     "jwt-simple": "^0.5.0",
     "method-override": "^2.3.5",
     "mongoose": "latest",
