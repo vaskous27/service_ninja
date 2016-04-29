@@ -15,7 +15,7 @@
   </div>
   <div class="right col s10 grey lighten-3 z-depth-1">
 <!--   <div id="searchBar"><h4>Search Services:</h4> <input type="text" ng-model="filter_name" placeholder="filter"><input id="add" type="button" onclick="location.href='#/addServices';" value="Add a new Service Request"/></div> -->
-  <h4>Search Services:</h4> 
+  <h4>Search My Services:</h4> 
     <nav>
     <div class="nav-wrapper">
       <form>
@@ -32,10 +32,11 @@
   <table id="serviceTable" class="highlight cyan-text text-darken-4">
     <thead>
       <tr>
-        <th data-field="title">Service Requested</th><th data-field="user">User</th><th data-field="created">Created At</th><th data-field="skills">Skillz Offered</th><th data-field="location">Location</th>
+       <th data-field="title">Service Requested</th><th data-field="user">User</th><th data-field="created">Created At</th><th data-field="skills">Skillz Offered</th><th data-field="location">Location</th>
       </tr>
     </thead>
     <tbody>
+      <tr>
       <tr ng-repeat="service in services | filter: filter_name | filter: cat_name | filter: location">
       <td><a href="#/show/{{service._id}}">{{service.title}}</a></td>
      	<td>Kevin</td>

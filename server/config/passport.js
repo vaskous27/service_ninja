@@ -1,78 +1,4 @@
-var express = require("express");
-var path = require("path");
-var bodyParser = require("body-parser");
-var mongoose = require("mongoose");
-var morgan = require('morgan');
-var flash    = require('connect-flash');
-var session      = require('express-session');
-var bodyParser = require('body-parser'); 
-var cookieParser = require('cookie-parser');
-
-var session = require('express-session');
-var bcrypt = require('bcrypt');
-
-var passport = require('passport');
-var app = express();
-var fs = require('fs');
-var multer = require('multer');
-app.use(function(req, res, next) {
-        res.header("Access-Control-Allow-Origin", "http://localhost");
-        res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-        next();
-    });
-
-var storage = multer.diskStorage({ //multers disk storage settings
-        destination: function (req, file, cb) {
-            cb(null, './uploads/')
-        },
-        filename: function (req, file, cb) {
-            var datetimestamp = Date.now();
-            cb(null, file.fieldname + '-' + datetimestamp + '.' + file.originalname.split('.')[file.originalname.split('.').length -1])
-        }
-    });
-
-var upload = multer({ //multer settings
-                storage: storage
-            }).single('file');
-
-
-app.use(bodyParser.json());
-app.use(morgan('dev')); // log every request to the console
-app.use(session({ secret: 'ilovescotchscotchyscotchscotch', resave: true,
-   saveUninitialized: true })); // session secret
-app.use(passport.initialize());
-app.use(passport.session()); // persistent login sessions
-app.use(flash()); // use connect-flash for flash messages stored in session
-// set up a static file server that points to the "client" directory
-app.use(express.static(path.join(__dirname, '/client')));
-require('./server/config/mongoose.js');
-app.use(morgan('dev'));
-
-app.use(express.static(path.join(__dirname + "/client")));
-app.use(bodyParser.urlencoded({
-	extended: true
-}));
-
-app.use(session({
-    secret: 'whats4lunch',
-    saveUninitialized: true,
-    resave: false,
-    //set cookie to httpOnly if we want to be able to read it in angular
-    cookie: {
-      httpOnly: false
-    }
-  }));
-
-
-
-// database configuration
-require("./server/config/mongoose.js");
-// routing
-require("./server/config/routes.js")(app);
-
-
-var User = mongoose.model('User');
-
+  module.exports = function(app){
 
 app.use(passport.initialize());
 app.use(passport.session());
@@ -109,18 +35,21 @@ passport.use('local-register', new LocalStrategy({
         // we are checking to see if the user trying to login already exists
         User.findOne({ 'local.email' :  email }, function(err, user) {
             // if there are any errors, return the error
-            if (err)
+            if (err) {
+              console.log('error1')
                 return done(err, false, 
                   { success: false, 
                     message: 'Registration failed for... reasons.' }
                 );
+            }
             // check to see if theres already a user with that email
             if (user) {
+              console.log('error2')
                 return done(null, false, 
                   { success: false, message: 'Email already exists.' }
                 );
             } else {
-
+              console.log('error3')
                 // if there is no user with that email
                 // create the user
                 var newUser = new User({name: req.body.name});
@@ -173,14 +102,3 @@ passport.use('local-login', new LocalStrategy({
         return done(null, {_id: user._id});
     });
 }));
-
-
-
-
-
-
-app.listen(8000, function() {
-  console.log('cool stuff on: 8000');
-});
-
-

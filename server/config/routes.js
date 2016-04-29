@@ -4,11 +4,13 @@ var Messages = require('./../controllers/messages.js');
 var services = require('./../controllers/services.js');  
 var categories = require('./../controllers/categories.js'); 
 var multer = require('multer'); 
+var passport = require('passport');
+var bcrypt = require('bcrypt');
+var User = require('./../models/user.js');
+// require('./passport')(passport);
+
   module.exports = function(app){
-    app.post('/login', function(req, res) {
-        console.log(req.body)
-    });
-        
+     
     app.get('/services', function(req, res){
       services.index(req, res);
     });
@@ -60,8 +62,8 @@ var multer = require('multer');
     Users.edit(req, res);
     })
 
-    app.post('/message/new', function(req, res) {
-    Messages.new(req, res);
+    app.post('/messages', function(req, res) {
+    Messages.create(req, res);
     })
 
       app.get('/messages', function(req, res) {
@@ -84,5 +86,63 @@ var multer = require('multer');
     app.get('/review/:name', function(req, res) {
     Reviews.findOne(req, res);
     })
+
+    app.post('/register', function(req, res, next) {
+      console.log('did a register route', req.body);
+      passport.authenticate('local-register', function(err, user, info) {
+        if (err) {
+          return res.status(401).json(info); 
+        }
+        if (!user) {
+          return res.status(401).json(info);
+        } 
+        return res.json(info);
+      })(req, res, next);
+    });
+
+    app.post('/login', function(req, res, next) {
+      passport.authenticate('local-login', function(err, user, info) {
+        if (err) {
+          return res.status(401).json(info); 
+        }
+        if (!user) {
+          return res.status(401).json(info);
+        }
+        req.logIn(user, function(loginErr) {
+          if (loginErr) { return next(loginErr); }
+          console.log('success')
+          return res.json(user);
+        });    
+      })(req, res, next);
+    });
+
+    app.get('/profile', isLoggedIn, function(req, res){
+      User.findOne({_id: req.user._id})
+        .select('_id name local.email')
+        .exec(function(err, user){
+          if(err) console.log(err);
+          res.json(user)
+      })
+    })
+
+    app.get('/logout', function(req, res){
+      req.logout();
+      res.json(true);
+    });
+
+    //middleware to check if we're logged in
+    function isLoggedIn(req, res, next) {
+        // if user is authenticated in the session, carry on 
+        if (req.isAuthenticated()){
+          return next();
+        }
+        else{
+          console.log('unauthorized access attempt!');
+          // if they aren't redirect them to the home page
+          // res.redirect('/');
+          return res.status(401).json({ success: false, message: 'authentication failed' });
+        }
+    
+}
 
   };
