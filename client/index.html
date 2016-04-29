@@ -90,6 +90,10 @@
             .when('/message/:id', {
                 templateUrl: 'partials/messageSinglePartial.html',
                 controller: 'messageSingleController'
+            })
+            .when('/removeService/:id', {
+                templateUrl: 'partials/removePartial.html',
+                controller: 'removeServiceeController'
             })                      
             .otherwise({
               redirectTo: '/'
@@ -122,6 +126,12 @@
           callback(output);
         })
       }
+      factory.delete = function(id, callback) {
+           console.log(id)
+             $http.delete('/services/delete/' + id).success(function(data) {
+               callback(data);
+             })
+           }
       return factory;
     })
     serviceninja.factory('categoryFactory', function($http){
@@ -566,6 +576,22 @@
           $scope.categories = data;
         })
       });
+      serviceninja.controller('removeServiceeController', function($scope, serviceFactory, categoryFactory, loginFactory, $location, $routeParams){
+        $scope.currentService = {};
+        $scope.currentUser = {};
+        loginFactory.getCurrent(function(data){
+            $scope.currentUser = data;
+          })
+          serviceFactory.find($routeParams.id, function(data){
+          $scope.currentService = data;
+        })
+          $scope.remove = function(){
+            serviceFactory.delete($routeParams.id, function(data){
+              console.log(data);
+            })
+            $location.path('/myServices');
+          }
+      });
       serviceninja.controller('showController', function($scope, serviceFactory, $routeParams, messageFactory, loginFactory, companyFactory){
         $scope.userData = {};
         $scope.newMessage = {};
@@ -771,10 +797,11 @@
       <a href="#/" class="brand-logo grey-text text-lighten-3">ServiceNinja</a>
       <ul id="nav-mobile" class="right hide-on-med-and-down cyan darken-4 grey-text text-lighten-3">
         <li><a href="#/">Home</a></li>
+        <li><a href="#/profile/{{profile1._id}}">My Profile</a></li>
+        <li><a href="#/myServices">My Services</a></li>
         <li><a href="#/services">View All Services</a></li>
         <li><a href="#/companies">View All Companies</a></li>
         <li><a href="#/inbox">Inbox</a></li>
-        <li><a href="#/myServices">My Services</a></li>
         <li><button ng-if='profile1 != null' ng-click="logout()" class="btn red">Logout</button></li>
         <li><button ng-if='profile1 == null' data-target="modal1" class="btn modal-trigger">Login</button></li>
       </ul>

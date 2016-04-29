@@ -44,7 +44,7 @@
       <td><time>{{service.created_at | amDateFormat: 'MMMM Do YYYY, h:mm a'}}</time> (<time am-time-ago="service.created_at"></time>)</td>
      	<td>{{service.skills}}</td>
      	<td>{{service.location}}</td>
-      <td><a href="#/remove/{{message._id}}">Remove</a></td>
+      <td><a href="#/removeService/{{service._id}}">Remove</a></td>
     	</tr>
     </tbody>
   </table>
