@@ -5,17 +5,13 @@ var bcrypt = require('bcrypt');
 // set up a mongoose model
 var UserSchema = new mongoose.Schema({
 
-    authId: Number,
-    name: String,
-    provider: String,
-    json_info: Object,
-
   name: String,
   description: String,
   logline: String,
   skills: String,
   location: String,
   url: String,
+  img: { data: Buffer, contentType: String },
   categories: [String],
   founder_first: String,
   founder_last: String,

@@ -6,6 +6,7 @@
           <img id="logo" src= "/img/yogaworks.jpg" alt="yogaworks logo" height="100" width="100">
           <div id="title">
             <h3 class="heading"> {{currentUser.name}} <a href="/#/dashboard/{{currentUser._id}}"><i class="material-icons" style="color:purple">mode_edit</i></a> </h3>
+            <p>{{currentUser.location}}</p>
             <p class="p"> {{currentUser.logline}}</p>
             <p class="p" id="categories" ng-repeat="category in currentUser.categories">&#149; {{category}} </p>
 
@@ -14,8 +15,8 @@
           </div>
 
           <div id="buttons">
-            <a href="/message" class="btn btn-default waves-effect waves-green z-depth-2">Connect</a>
-            <a href="/" id= "btn1" class="btn btn-default waves-effect waves-green z-depth-2">Services</a>
+            <a href="/#/inbox" class="btn btn-default waves-effect waves-green z-depth-2">Connect</a>
+            <a href="/#/services" id= "btn1" class="btn btn-default waves-effect waves-green z-depth-2">Services</a>
           </div>
       </div>
 

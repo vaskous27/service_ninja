@@ -13,6 +13,16 @@
 		<input id="title" class="validate" type="text" ng-model="newService.title">
 	    <label for="title">Title</label>
 	</div>
+<<<<<<< HEAD
+	<p>Skills(will be drop down): <input type="text" ng-model="newService.skills"></p>
+	<p>Category(will be drop down):
+	  <select ng-model="newService.category" ng-options="category.name as category.name for category in categories">
+	  <option value="">Choose a Category</option>
+	  </select></p>
+	<p>Location: <input type="text" ng-model="newService.location"></p>
+	<p>Description: <textarea ng-model="newService.description" rows="4" cols="40"></textarea></p>
+	<input type="submit" value="Add New Service">
+=======
     <div class="input-field col s12">
       <i class="material-icons prefix">work</i>
       <textarea id="skill" class="materialize-textarea" ng-model="newService.skills"></textarea>
@@ -35,6 +45,7 @@
 	    <label for="location">Location</label>
 	</div>
 	<button id="create" class="btn btn-default waves-effect waves-green z-depth-2">Create</button>
+>>>>>>> 032fd60a3efbcf6558aeb12254b9cb68307f1d68
 	</form>
 <!-- </div> -->
 </div>

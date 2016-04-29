@@ -2,7 +2,8 @@ var Users = require('./../controllers/users.js');
 var Reviews = require('./../controllers/reviews.js'); 
 var Messages = require('./../controllers/messages.js');  
 var services = require('./../controllers/services.js');  
-var categories = require('./../controllers/categories.js');
+var categories = require('./../controllers/categories.js'); 
+var multer = require('multer'); 
 var passport = require('passport');
 var bcrypt = require('bcrypt');
 var User = require('./../models/user.js');
@@ -28,24 +29,40 @@ var User = require('./../models/user.js');
       categories.index(req, res);
     });
 
-    app.post('/users/new', function(req, res) {
+    app.post('/users/new', multer({dest:'./uploads/'}).single('img'), function(req, res) {
         console.log(req.body, "In routes new_user")
+        console.log(req.file, "Img in routes new_user")
+        Users.new(req, res);
     });
-
-    app.post('/users/new', function(req, res) {
-
-    Users.new(req, res);
-    })
+     /** API path that will upload the files */
+    app.post('/upload', function(req, res) {
+        upload(req,res,function(err){
+            if(err){
+                 res.json({error_code:1,err_desc:err});
+                 return;
+            }
+             res.json({error_code:0,err_desc:null});
+        })
+       
+    });
 
     app.get('/users', function(req, res) {
     Users.index(req, res);
     })
 
     app.get('/users/:id', function(req, res) {
-    Users.findOne(req, res);
+        console.log(req.params)
+        Users.findOne(req, res);
     })
 
+    app.delete('/users/delete/:id', function(req, res) {
+        console.log(req.params.id, "trying to delete user in routes")
+        Users.remove(req, res);
+    })
+
+
     app.put('/users/edit/:id', function(req, res) {
+        console.log(req.body, "This is the update shit")
     Users.edit(req, res);
     })
 
@@ -129,7 +146,8 @@ var User = require('./../models/user.js');
         else{
           console.log('unauthorized access attempt!');
           // if they aren't redirect them to the home page
-          res.redirect('/');
+          // res.redirect('/');
+          return res.status(401).json({ success: false, message: 'authentication failed' });
         }
     
 }
