@@ -8,11 +8,14 @@
           
           });  
 </script>
-
+<div class="container">
  <div id="edit_wrapper">
-      <h4 style="color:green">Edit Profile</h4> 
+      <h4 class="cyan-text text-darken-4">Edit Profile</h4> 
+       <div class="buttons">
+            <a href="/#/profile/{{edit_user._id}}"class="btn btn-default waves-effect waves-green z-depth-1" id="profile_button">View Profile</a>
+          </div>
       <form>
-      <div class="z-depth-4 company_name">
+      <div class="z-depth-1 company_name">
           <img id="logo" src= "/img/yogaworks.jpg" alt="yogaworks logo" height="100" width="100">
           <div id="title">
             <p class="p"> <input ng-model="edit_user.name" type="text" class="validate">
@@ -22,48 +25,41 @@
             <p> <input ng-model="edit_user.location" type="text" class="validate">
                     <label for="location">Location</label></h3>
 
-             <p style="color:green">Select Your Company Category</p>
+             <p class="cyan-text text-darken-4">Select Your Company Category</p>
                     <select multiple ng-model="edit_user.categories">
                       <option class="Consulting" value="Consulting">Consulting</option>
                       <option value="Marketing">Marketing</option>
                       <option value="Web Development">Web Development</option>
                       <option value="Wellness">Wellness</option>
                     </select>
-
-
-          </div>
-
-          <div class="buttons">
-            <a href="/#/profile/{{edit_user._id}}"class="btn btn-default waves-effect waves-green z-depth-2">View Profile</a>
-            <a href="/#/services" id= "btn1" class="btn btn-default waves-effect waves-green z-depth-2">Services</a>
           </div>
       </div>
 
       <div id="content">
 
-        <div class="z-depth-4 description">
+        <div class="z-depth-1 description">
           <h5 class="heading">Description:</h5>
           <p><textarea ng-model="edit_user.description" class="materialize-textarea"></textarea> </p>
 
           <p id="site"><strong class="heading">Website:</strong><input ng-model="edit_user.url" type="text" class="validate"></a> </p>
         </div>
 
-        <div class="skills z-depth-4">
+        <div class="skills z-depth-1">
           <p class="heading" id="skills_title"><strong>Skills:</strong></p>
-          <input ng-model="edit_user.skills" type="text" class="validate">
+          <input class="cyan-text text-darken-4" ng-model="edit_user.skills" type="text" class="validate">
         </div>
 
-        <div class="z-depth-4 founder">
+        <div class="z-depth-1 founder">
           <p class="heading" id="founder_title"><strong>Founder</strong></p>
           <img src="/img/yogafounder.jpg" width="150" height="auto">
           <p id="name" class="edit_founder"><label for="first_name">First Name</label><input ng-model="edit_user.founder_first" type="text" class="validate"><label for="first_name">Last Name</label><input ng-model="edit_user.founder_last" type="text" class="validate"></p>
-           <button ng-click="editUser()" id="edit" class="btn btn-default waves-effect waves-green z-depth-2">Submit</button>
+           <button ng-click="editUser()" id="edit" class="btn btn-default waves-effect waves-green z-depth-1">Submit</button>
         </div>
       </div>
       </form>
 
-        <button ng-click="delete()" id="delete" class="btn btn-default waves-effect waves-green z-depth-2">Delete Account</button>
-
+        <button ng-click="delete()" id="delete" class="btn red btn-default waves-effect waves-green z-depth-1">Delete Account</button>
+</div>
 
         <div id="murphy">
   <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" x="0px" y="0px" width="358.602px" height="446.042px" viewBox="0 0 358.602 446.042" enable-background="new 0 0 358.602 446.042" xml:space="preserve">
