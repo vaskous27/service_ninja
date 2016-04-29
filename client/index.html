@@ -42,7 +42,7 @@
             })
             .when('/dashboard/:id', {
                   templateUrl: 'partials/dashboard.html',
-                  controller: 'profilesController'
+                  controller: 'companyEditController'
             })
             .when('/howitworks',{
                   templateUrl: 'partials/how-it-works.html'
@@ -52,11 +52,7 @@
             })
             .when('/register', {
                 templateUrl: 'partials/register.html'
-            }) 
-            .when('/dashboard', {
-                templateUrl: 'partials/dashboard.html',
-                controller: 'profilesController'
-            })            
+            })           
              .when('/profile/:id', {
                 templateUrl: 'partials/profileView.html'
             })
@@ -100,6 +96,29 @@
             $scope.new_user = {};
           }) 
          };
+         loginFactory.getCurrent(function(data){
+            $scope.currentUser = data;
+            console.log($scope.currentUser)
+          })
+          $scope.logout = loginFactory.logout;
+
+          profileFactory.show(function(res){
+            $scope.profile = res.data;
+          }, function(){
+            console.log('something went wrong');
+          })
+          loginFactory.getCurrent(function(data){
+            $scope.currentUser = data;
+            console.log($scope.currentUser)
+          })
+          $scope.logout = loginFactory.logout;
+
+          profileFactory.show(function(res){
+            $scope.profile = res.data;
+          }, function(){
+            console.log('something went wrong');
+          })
+
        })
        serviceninja.controller('companyViewController', function($scope, $location, $routeParams, companyFactory){
            $scope.users = [];
@@ -114,6 +133,18 @@
             console.log(data)
               $scope.currentUser = data; 
           })
+           loginFactory.getCurrent(function(data){
+            $scope.currentUser = data;
+            console.log($scope.currentUser)
+          })
+          $scope.logout = loginFactory.logout;
+
+          profileFactory.show(function(res){
+            $scope.profile = res.data;
+          }, function(){
+            console.log('something went wrong');
+          })
+           
          })
          serviceninja.controller('companyEditController', function($scope, $location, companyFactory, $routeParams){
 
@@ -125,7 +156,17 @@
               console.log(data)
               $scope.currentUser = data; 
             })
+            loginFactory.getCurrent(function(data){
+              $scope.currentUser = data;
+              console.log($scope.currentUser)
+            })
+            $scope.logout = loginFactory.logout;
 
+            profileFactory.show(function(res){
+              $scope.profile = res.data;
+            }, function(){
+              console.log('something went wrong');
+            })
 
          })  
 
