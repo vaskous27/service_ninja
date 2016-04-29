@@ -94,7 +94,11 @@
             .when('/removeService/:id', {
                 templateUrl: 'partials/removePartial.html',
                 controller: 'removeServiceeController'
-            })                      
+            })
+            .when('/removeAccount/:id', {
+                templateUrl: 'partials/removeAccountPartial.html',
+                controller: 'removeAccountController'
+            })                        
             .otherwise({
               redirectTo: '/'
             })
@@ -590,6 +594,24 @@
               console.log(data);
             })
             $location.path('/myServices');
+          }
+      });
+      serviceninja.controller('removeAccountController', function($scope, companyFactory, categoryFactory, loginFactory, $location, $routeParams, $rootScope){
+        $scope.currentService = {};
+        $scope.toRemove = {};
+        $scope.currentUser = {};
+        loginFactory.getCurrent(function(data){
+            $scope.currentUser = data;
+          })
+          companyFactory.getUser($scope.currentUser._id, function(data){
+          $scope.toRemove = data;
+        })
+          $scope.remove = function(){
+            companyFactory.delete($scope.currentUser._id, function(data){
+              console.log(data);
+            })
+            $rootScope.profile1 = null;
+            $location.path('/');
           }
       });
       serviceninja.controller('showController', function($scope, serviceFactory, $routeParams, messageFactory, loginFactory, companyFactory){
