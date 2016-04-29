@@ -3,7 +3,7 @@ var Schema = mongoose.Schema;
 var MessageSchema = new mongoose.Schema({
   subject: String,
   content: String,
-  recipient: {type: Schema.Types.ObjectId, ref: 'User'},
+  _recipient: {type: Schema.Types.ObjectId, ref: 'User'},
   _user: {type: Schema.Types.ObjectId, ref: 'User'}
 });
 var Review = mongoose.model('Message', MessageSchema);

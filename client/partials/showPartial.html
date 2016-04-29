@@ -6,6 +6,7 @@
 <div class="container">
 	<div class="serviceForm z-depth-1">
 		<h4>Service Requested: {{currentService.title}}</h4>
+    <p>Requested by: {{userData.name}}</p>
 		<p>Created: <time>{{currentService.created_at | amDateFormat: 'MMMM Do YYYY, h:mm a'}}</time> (<time am-time-ago="currentService.created_at"></time>)</p>
 		<h5>Skills Offered: {{currentService.skills}}</h5>
 		<h5>Location: {{currentService.location}}</h5>
@@ -18,20 +19,18 @@
   <!-- Modal Structure -->
   <div id="modalMessage" class="modal">
     <div class="modal-content">
-      <h4>Send A Message to (user)</h4>
+      <h4>Send A Message to {{userData.name}}</h4>
      <div class="input-field col s6">
-	    <i class="material-icons prefix">mode_edit</i>
+	    <i class="material-icons prefix">email</i>
 		<input id="subject" class="validate" type="text" ng-model="newMessage.subject">
 	    <label for="subject">Subject</label>
 	</div>
       <div class="input-field col s12">
-      <i class="material-icons prefix">chat_bubble_outline</i>
+      <i class="material-icons prefix">mode_edit</i>
       <textarea id="description" class="materialize-textarea" ng-model="newMessage.content"></textarea>
       <label for="description">Message:</label>
   	</div>
     </div>
-    <div class="modal-footer">
       <button ng-click="addMessage()" id="create" class="btn btn-default waves-effect waves-green z-depth-2">Send</button>
-    </div>
   </div>
           

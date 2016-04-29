@@ -28,22 +28,21 @@
     </div>
   </nav>
 <!--   <input id="add" type="button" onclick="location.href='#/addServices';" value="Add a new Service Request"/> -->
-<button id="add" onclick="location.href='#/addServices';" class="btn btn-default waves-effect waves-cyan z-depth-1 cyan darken-3 grey-text text-lighten-3">New Service Request</button>
   <table id="serviceTable" class="highlight cyan-text text-darken-4">
     <thead>
       <tr>
-        <th data-field="name">Company Name</th><th data-field="categories">Categories</th><th data-field="created">Created At</th><th data-field="skills">Skillz Offered</th><th data-field="location">Location</th>
+        <th data-field="name">Company Name</th><th data-field="categories">Categories</th><th data-field="website">Website</th><th data-field="skills">Skillz Offered</th><th data-field="location">Location</th>
       </tr>
     </thead>
     <tbody>
-      <tr>
-      <td>kevinScript</td>
-      <td>Awesomeness</td>
-      <td>The Beginning of Time</td>
+      <tr ng-repeat="company in companies | filter: filter_name | filter: cat_name | filter: location">
+      <td><a href="#/profile/{{company._id}}">{{company.name}}</a></td>
+      <td><p ng-repeat="cat in company.categories">{{cat}}</p></td>
+      <td><a href="http://{{company.url}}">{{company.url}}</a></td>
       <!-- <tr ng-repeat="service in services | filter: filter_name | filter: cat_name | filter: location"> -->
       <!-- <td><a href="#/show/{{service._id}}">{{service.title}}</a></td> -->
-     	<td>Killin' It</td>
-      <td>The Outernet</td>
+     	<td>{{company.skills}}</td>
+      <td>{{company.location}}</td>
       <!-- <td><time>{{service.created_at | amDateFormat: 'MMMM Do YYYY, h:mm a'}}</time> (<time am-time-ago="service.created_at"></time>)</td> -->
      	<!-- <td>{{service.skills}}</td> -->
      	<!-- <td>{{service.location}}</td> -->

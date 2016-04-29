@@ -29,6 +29,7 @@
   </nav>
 <!--   <input id="add" type="button" onclick="location.href='#/addServices';" value="Add a new Service Request"/> -->
 <button id="add" onclick="location.href='#/addServices';" class="btn btn-default waves-effect waves-cyan z-depth-1 cyan darken-3 grey-text text-lighten-3">New Service Request</button>
+<div id="serviceTableDiv">
   <table id="serviceTable" class="highlight cyan-text text-darken-4">
     <thead>
       <tr>
@@ -38,12 +39,13 @@
     <tbody>
       <tr ng-repeat="service in services | filter: filter_name | filter: cat_name | filter: location">
       <td><a href="#/show/{{service._id}}">{{service.title}}</a></td>
-     	<td>Kevin</td>
+     	<td>{{service._user.name}}</td>
       <td><time>{{service.created_at | amDateFormat: 'MMMM Do YYYY, h:mm a'}}</time> (<time am-time-ago="service.created_at"></time>)</td>
      	<td>{{service.skills}}</td>
      	<td>{{service.location}}</td>
     	</tr>
     </tbody>
   </table>
+  </div>
   </div>
   </div>
