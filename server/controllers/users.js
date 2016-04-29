@@ -6,6 +6,7 @@ module.exports = (function() {
 
      new: function(req, res){
                     User.create(req.body, function(err, results) {
+                        console.log(req.body, "created user")
                         if(err) {
                             console.log(err);
                         }
@@ -29,7 +30,7 @@ module.exports = (function() {
 
     findOne: function(req, res){
                 User.findOne({_id: req.params.id}, function(err, data){
-                    console.log(req.params.id)
+                    console.log(req.params.id, "got to controller")
                     if(err) {
                         console.log(err);
                     }
@@ -48,7 +49,15 @@ module.exports = (function() {
                         }
                         res.json(data);
                     })
+    },
+
+    remove: function(req, res) {
+        console.log(req.params);
+           User.remove({_id: req.params.id}).exec(function(){
+            res.json(200);
+          });
     }
+
 
    }
 })();

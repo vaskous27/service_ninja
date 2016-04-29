@@ -4,10 +4,9 @@ var Schema = mongoose.Schema;
 // set up a mongoose model
 var UserSchema = new mongoose.Schema({
 
-    authId: Number,
-    name: String,
-    provider: String,
-    json_info: Object,
+    // authId: Number,
+    // provider: String,
+    // json_info: Object,
 
   name: String,
   description: String,
@@ -15,28 +14,29 @@ var UserSchema = new mongoose.Schema({
   skills: String,
   location: String,
   url: String,
+  img: { data: Buffer, contentType: String },
   categories: [String],
   founder_first: String,
   founder_last: String,
   founder_photo: String,
   logo: String,
-  reviews: [{type: Schema.Types.ObjectId, ref: 'Review'}],
-  local            : {
-        email        : String,
-        password     : String,
-    },
-    facebook         : {
-        id           : String,
-        token        : String,
-        email        : String,
-        name         : String
-    },
-    google           : {
-        id           : String,
-        token        : String,
-        email        : String,
-        name         : String
-    }
+  reviews: [{type: Schema.Types.ObjectId, ref: 'Review'}]
+  // local            : {
+  //       email        : String,
+  //       password     : String,
+  //   },
+  //   facebook         : {
+  //       id           : String,
+  //       token        : String,
+  //       email        : String,
+  //       name         : String
+  //   },
+  //   google           : {
+  //       id           : String,
+  //       token        : String,
+  //       email        : String,
+  //       name         : String
+  //   }
 
 });
  

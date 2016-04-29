@@ -20,7 +20,7 @@
 
 #nav-bar {
 	width: 950px;
-	height: 150px;
+	height: auto;
 	border: 1px solid green;
 	margin-top: 20px;
 	display: inline-block;
@@ -32,7 +32,7 @@
 
 .company_name {
 	width: 950px;
-	height: 150px;
+	height: auto;
 	border: 1px solid green;
 	margin-top: 20px;
 	display: inline-block;
@@ -50,6 +50,7 @@
 	display: inline-block;
 	vertical-align: top;
 	margin-left: 10px;
+  margin-top: 100px;
 }
 
 #buttons {
@@ -294,6 +295,7 @@ p#category, .select-wrapper input.select-dropdown {
 .input-field label {
 	color: green;
 }
+
 
 strong {
 	color: green;

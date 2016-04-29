@@ -9,23 +9,25 @@
 	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.5/angular-route.min.js"></script>
   <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment.min.js"></script>
   <script src="//cdnjs.cloudflare.com/ajax/libs/angular-moment/0.9.0/angular-moment.min.js"></script>
+  <script src="/js/ng-file-upload-shim.min.js"></script> <!-- for no html5 browsers support -->
+  <script src="/js/ng-file-upload.min.js"></script>
   <link href="/stylesdashboard.css" rel="stylesheet">
   <script>
       $(document).ready(function() {
           $('select').material_select();
           // the "href" attribute of .modal-trigger must specify the modal ID that wants to be triggered
           
-          });
-     
+          });  
 
-  	  var serviceninja = angular.module('serviceninja', ['ngRoute', 'angularMoment']);
+  	  var serviceninja = angular.module('serviceninja', ['ngRoute', 'angularMoment', 'ngFileUpload']);
 
       serviceninja.config(function ($routeProvider) {
           $routeProvider
-            .when('/',{
-                templateUrl: 'partials/front.html',
-                controller: 'HomeController'
-            })  
+            // .when('/',{
+            //     templateUrl: 'partials/front.html',
+            //     controller: 'HomeController'
+            // }) 
+
             .when('/login', {
                 templateUrl: 'partials/login.html'
             })
@@ -33,8 +35,7 @@
                 templateUrl: 'partials/signup.html'
             })
             .when('/dashboard/:id', {
-                  templateUrl: 'partials/front.html',
-                  controller: 'ApplicationController'
+                templateUrl: 'partials/dashboard.html'
                 })
             .when('/howitworks',{
                   templateUrl: 'partials/how-it-works.html'
@@ -44,9 +45,6 @@
                 })
             .when('/register', {
                 templateUrl: 'partials/register.html'
-            }) 
-            .when('/dashboard', {
-                templateUrl: 'partials/dashboard.html'
             })            
              .when('/profile/:id', {
                 templateUrl: 'partials/profileView.html'
@@ -86,6 +84,8 @@
       }
       return factory;
     })
+
+
     serviceninja.factory('categoryFactory', function($http){
       var factory = {};
       var categories = [];
@@ -145,13 +145,11 @@
           var factory = {};
           var user = {};
           var users = [];
-          var editedUser = {};
 
-            factory.create = function(new_user,callback) {
+            factory.create = function(new_user, callback) {
              console.log(new_user)
             $http.post('/users/new', new_user).success(function(res) {
               user = res;
-              console.log(res)
               callback(res)
             })
           }
@@ -163,6 +161,13 @@
               })
           }
 
+           factory.delete = function(id, callback) {
+            console.log(id)
+              $http.delete('/users/delete/' + id).success(function(data) {
+                callback(data);
+              })
+            }
+
           factory.getUser = function(id, callback) {
             console.log(id, "trying to get a company")
             $http.get('/users/' + id).success(function(data) {
@@ -170,24 +175,61 @@
               user = data;
               callback(user);
             })
+
+            factory.edit = function(edit_user, callback) {
+              $http.put('/users/edit/' + edit_user._id, edit_user ).success(function(data) {
+                console.log(data, "transferring edited user to backend")
+                user = data;
+                callback(user);
+              })
+            }
       }
 
           return factory;
       }) 
 
 
-       serviceninja.controller('companyFormController', function($scope, $location, companyFactory){
+       serviceninja.controller('companyFormController', function($scope, $location, companyFactory, Upload, $window){
 
          $scope.users = [];
          $scope.user = {};
          $scope.new_user = {};
+         $scope.file = {};
 
          $scope.addUser = function() {
-          companyFactory.create($scope.new_user, function(data) {
+          companyFactory.create($scope.new_user, function(data, file) {
+
+        //      if ($scope.new_user.file.$valid && $scope.file) { //check if from is valid
+        //     $scope.upload($scope.file); //call upload function
+        // }
                $location.path('/profile/' + data._id);
-            $scope.new_user = {};
+               $scope.new_user = {};
           }) 
          };
+
+    //      $scope.upload = function (file) {
+    //     Upload.upload({
+    //         url: '/upload', //webAPI exposed to upload the file
+    //         data:{file:file} //pass file as data, should be user ng-model
+    //     }).then(function (resp) { //upload function returns a promise
+    //         if(resp.data.error_code === 0){ //validate success
+    //             $window.alert('Success ' + resp.config.data.file.name + 'uploaded. Response: ');
+    //         } else {
+    //             $window.alert('an error occured');
+    //         }
+    //     }, function (resp) { //catch error
+    //         console.log('Error status: ' + resp.status);
+    //         $window.alert('Error status: ' + resp.status);
+    //     }, function (evt) { 
+    //         console.log(evt);
+    //         var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
+    //         console.log('progress: ' + progressPercentage + '% ' + evt.config.data.file.name);
+    //         $scope.progress = 'progress: ' + progressPercentage + '% '; // capture upload progress
+    //     });
+    // };
+
+
+
        })
 
        serviceninja.controller('companyViewController', function($scope, $location, $routeParams, companyFactory){
@@ -212,12 +254,30 @@
 
              $scope.currentUser = {};
              $scope.user = {};
+             $scope.edit_user = {};
              var id = $routeParams.id;
 
             companyFactory.getUser(id, function(data) {
-              console.log(data)
               $scope.currentUser = data; 
+              $scope.edit_user = $scope.currentUser;
             })
+
+            $scope.editUser = function() {
+              console.log($scope.edit_user)
+              companyFactory.edit($scope.edit_user, function(data) {
+                console.log(data, "data in controller")
+                $location.path('/profile/' + id)
+                $scope.edit_user = {};
+              })
+            }
+
+            $scope.delete = function() {
+              companyFactory.delete(id, function(data) {
+                $location.path('/');
+                console.log(data);
+            })
+            }
+
 
          })
 
@@ -228,6 +288,7 @@
         this.userId = userId;
         this.userRole = userRole;
       };
+
       this.destroy = function () {
         this.id = null;
         this.userId = null;
