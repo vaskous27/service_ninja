@@ -2,11 +2,11 @@
 
  <div id="wrapper">
 
-      <div id ="nav-bar" class="z-depth-4">
+      <div id ="nav-bar" class="z-depth-1">
           <img id="logo" src= "/img/yogaworks.jpg" alt="yogaworks logo" height="100" width="100">
           <div id="title">
-            <h3 class="heading"> {{currentUser.name}} <a href="/#/dashboard/{{currentUser._id}}"><i class="material-icons" style="color:purple">mode_edit</i></a> </h3>
-            <p>{{currentUser.location}}</p>
+            <h3 class="heading"> {{currentUser.name}} <a href="/#/dashboard/{{currentUser._id}}"><i class="material-icons">mode_edit</i></a> </h3>
+            <p id="location">{{currentUser.location}}</p>
             <p class="p"> {{currentUser.logline}}</p>
             <p class="p" id="categories" ng-repeat="category in currentUser.categories">&#149; {{category}} </p>
 
@@ -15,28 +15,28 @@
           </div>
 
           <div id="buttons">
-            <a href="/message" class="btn btn-default waves-effect waves-green z-depth-2">Connect</a>
-            <a href="/" id= "btn1" class="btn btn-default waves-effect waves-green z-depth-2">Services</a>
+            <a href="/message" class="btn btn-default waves-effect waves-green z-depth-1">Connect</a>
+            <a href="/" id= "btn1" class="btn btn-default waves-effect waves-green z-depth-1">Services</a>
           </div>
       </div>
 
       <div id="content">
 
-        <div id="main-body" class="z-depth-4">
+        <div id="main-body" class="z-depth-1 container">
           <h5 class="heading">Description:</h5>
           <p> {{currentUser.description}} </p>
 
           <p id="site"><strong class="heading">Website:</strong><a href="http://{{currentUser.url}}"> {{currentUser.url}}</a> </p>
         </div>
 
-        <div id="skills" class="z-depth-4">
+        <div id="skills" class="z-depth-1 container">
           <p class="heading" id="skills_title"><strong>Skills:</strong></p>
           <ul>
             <li>&#149; {{currentUser.skills}}</li>
           </ul>
         </div>
 
-        <div id="founder" class="z-depth-4">
+        <div id="founder" class="z-depth-1 container">
           <p class="heading" id="founder_title"><strong>Founder</strong></p>
           <img src="/img/yogafounder.jpg" width="150" height="auto">
           <p id="name">{{currentUser.founder_first}} {{currentUser.founder_last}}</p>
@@ -44,7 +44,7 @@
       </div>
 
         <div id="side-content">
-           <div id="services" class="z-depth-4">
+           <div id="services" class="z-depth-1">
               <h5 class="heading"> Services Requested </h5>
 
               <div class="box">
@@ -72,7 +72,7 @@
               </div>
            </div>
 
-          <div id="reviews" class="z-depth-4">
+          <div id="reviews" class="z-depth-1">
               <h5 id="review_title">Reviews</h5>
               <p id="review_company"><a href="">Space X</a></p>
               <p> <img src=/img/mushroom.png width="40" height="30">

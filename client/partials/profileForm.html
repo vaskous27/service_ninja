@@ -7,12 +7,12 @@
 </script>
 
 
- <div id="profile_form" class="z-depth-4">
-            <h3 style="color:green">Create Company Profile</h3>
+ <div id="profile_form" class="z-depth-1">
+            <h3 class="cyan-text text-darken-4">Create Company Profile</h3>
            <!--  <div class="row"> -->
               <form class="col s12" enctype="multipart/form-data" ng-submit="addUser()">
              <!--  <div class="file-field input-field" id="logo">
-                      <div class="btn btn-default waves-effect waves-green z-depth-2" id="img_btn">
+                      <div class="btn btn-default waves-effect waves-green z-depth-1" id="img_btn">
                         <span>Logo</span>
                         <input type="file" ngf-select ng-model="img" name="img" ngf-pattern="'image/*'"
                         ngf-accept="'image/*'" ngf-resize="{width: 100, height: 100}">
@@ -50,7 +50,7 @@
                     <label for="url">Link to your Website</label>
                   </div>  
                   <div class="input-field col s12">
-                    <p style="color:green">Select Your Company Category</p>
+                    <p class="cyan-text text-darken-4" style="margin-left: 45px;">Select Your Company Category</p>
                     <select multiple ng-model="new_user.categories">
                       <option class="Consulting" value="">Consulting</option>
                       <option value="Marketing">Marketing</option>
@@ -72,7 +72,7 @@
                     </div>
 
                       <div class="file-field input-field" id="founder_photo">
-                      <div class="btn btn-default waves-effect waves-green z-depth-2" id="img_btn">
+                      <div class="btn btn-default waves-effect waves-green z-depth-1" id="img_btn">
                         <span>Photo</span>
                         <input type="file">
                       </div>
@@ -81,7 +81,7 @@
                       </div> -->
                     </div>
                 </div>
-                 <button id="create" class="btn btn-default waves-effect waves-green z-depth-2">Create</button>
+                 <button id="create" class="btn red btn-default waves-effect waves-green z-depth-1">Create</button>
 
               </form>
        <!--      </div> -->
