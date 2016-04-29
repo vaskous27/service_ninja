@@ -41,6 +41,12 @@ module.exports = (function() {
                }
        })
     },
+    remove: function(req, res) {
+        console.log(req.params);
+           Service.remove({_id: req.params.id}).exec(function(){
+            res.json(200);
+          });
+    },
     find: function(req, res){
          Service.findOne({_id: req.params.id}, function(err, results){
              if(err) {

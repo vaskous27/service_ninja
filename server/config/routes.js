@@ -21,6 +21,10 @@ var User = require('./../models/user.js');
       console.log("got to routes");
       services.indexUser(req, res);
     });
+    app.delete('/services/delete/:id', function(req, res) {
+        console.log(req.params.id, "trying to delete user in routes")
+        services.remove(req, res);
+    })
     app.get('/viewServices/:id', function(req, res){
       console.log("got to routes");
       services.find(req, res);
